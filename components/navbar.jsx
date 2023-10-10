@@ -23,6 +23,7 @@ function NavBar() {
                             src="/logo.svg" 
                             width={100}
                             height={100}
+                            href="/"
                         />
                     </div>
                     <NavigationMenu>
@@ -52,7 +53,7 @@ function NavBar() {
                     </NavigationMenu>
             </div>
         </div>
-    );
+    )
 }
 
 export default NavBar;
