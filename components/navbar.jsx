@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import Link from "next/link";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
@@ -9,39 +10,48 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { ModeToggle } from "./dark-mode-toggle";
+import Image from "next/image";
 
 function NavBar() {
   return (
-    <>
-    <div className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur dark:border-zinc-800">
+    <div className="sticky top-0 z-50 w-full border-b bg-background/95 p-2 backdrop-blur dark:border-zinc-800">
       <div className="container flex items-center justify-between">
         <div className="hidden md:flex">
-          <img 
+          <Image
             src="/logo.svg"
-            className="flex items-center"  // Aangepaste breedte, hoogte behouden
+            className="flex items-center dark:hidden" // Aangepaste breedte, hoogte behouden
             alt="Logo"
             href="/"
-            width={80}
+            width={120}
+            height={80}
+          />
+          <Image
+            src="/logo-white.svg"
+            className="items-center hidden dark:block" // Aangepaste breedte, hoogte behouden
+            alt="Logo"
+            href="/"
+            width={120}
+            height={80}
           />
         </div>
         <NavigationMenu>
-          <NavigationMenuList className="flex flex-col md:flex-row">
+          <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="/docs" passHref>
+              <Link href="/" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Home
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/contact" passHref>
+              <Link href="/" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  New Releases
+                  New releases
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/contact" passHref>
+              <Link href="/" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Top
                 </NavigationMenuLink>
@@ -49,10 +59,9 @@ function NavBar() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <ModeToggle/>
+        <ModeToggle />
       </div>
     </div>
-    </>
   );
 }
 
