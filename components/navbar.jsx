@@ -8,21 +8,24 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { ModeToggle } from "./dark-mode-toggle";
 
 function NavBar() {
   return (
+    <>
     <div className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur dark:border-zinc-800">
-      <div className="container flex items-center">
-        <div className="mr-4">
-          <img
+      <div className="container flex items-center justify-between">
+        <div className="hidden md:flex">
+          <img 
             src="/logo.svg"
-            className="w-24 h-16"  // Aangepaste breedte, hoogte behouden
+            className="flex items-center"  // Aangepaste breedte, hoogte behouden
             alt="Logo"
             href="/"
+            width={80}
           />
         </div>
         <NavigationMenu>
-          <NavigationMenuList className="flex flex-col md:flex-row md:ml-4">
+          <NavigationMenuList className="flex flex-col md:flex-row">
             <NavigationMenuItem>
               <Link href="/docs" passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -46,8 +49,10 @@ function NavBar() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+        <ModeToggle/>
       </div>
     </div>
+    </>
   );
 }
 
