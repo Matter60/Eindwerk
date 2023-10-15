@@ -1,3 +1,9 @@
+import GenreList from "@/components/GenreList";
+
 export default function Home() {
-  return <></>;
+  return (
+    <>
+      <GenreList />
+    </>
+  );
 }
