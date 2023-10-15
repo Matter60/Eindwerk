@@ -1,23 +1,25 @@
-"use client"
-import GlobalApi from '@/services/GlobalApi'
-import React, { useEffect } from 'react'
+export async function getGenres() {
+  const response = await fetch(
+    `https://api.rawg.io/api/genres?key=${process.env.RAWG_API_KEY}`
+  );
 
-function GenreList() {
+  if (response.ok) {
+    const data = await response.json();
+    return data.results;
+  }
 
-    useEffect(() => {
-        getGenreList()
-
-    }, [])
-
-    const getGenreList =() => {
-        GlobalApi.getGenreList.then((resp)=>{
-            console.log(resp)
-        })
-
-    }
-  return (
-    <div>GenreList</div>
-  )
+  return [];
 }
 
-export default GenreList
+export async function GenreList() {
+  const genres = await getGenres();
+  return (
+    <div>
+      {genres.map((genre) => {
+        return <div key={genre.id}>{genre.name}</div>;
+      })}
+    </div>
+  );
+}
+
+export default GenreList;
