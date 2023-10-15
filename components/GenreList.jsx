@@ -13,11 +13,16 @@ export async function getGenres() {
 
 export async function GenreList() {
   const genres = await getGenres();
+  console.log(genres);
   return (
     <div>
-      {genres.map((genre) => {
-        return <div key={genre.id}>{genre.name}</div>;
-      })}
+      {genres.map((genre) => (
+        <div className="flex gap-2 items-center"key={genre.id}>
+          <img className="w-[40px] h-[25px]" src={genre.image_background} alt={genre.name} />
+          <h2>{genre.name}</h2>
+          
+        </div>
+      ))}
     </div>
   );
 }
