@@ -2,7 +2,7 @@ import GenreList from "@/components/GenreList";
 export default function Home() {
   return (
     <>
-      <div className="grid grid-cols-4 px-8">
+      <div className="grid grid-cols-4 px-5">
         <div className="hidden md:block">
           <GenreList />
         </div>
