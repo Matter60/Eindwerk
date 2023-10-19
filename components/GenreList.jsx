@@ -16,13 +16,13 @@ export async function getGenres() {
 export async function GenreList() {
   const genres = await getGenres();
   return (
-    <div>
-      <h2 className="text-[30px] font-bold">Genres</h2>
+    <div className="w-56">
+      <h2 className="text-xl font-bold my-4">Genres</h2>
       {genres.map((genre) => (
         <Link
           href={`/genre/${genre.id}`}
           key={genre.id}
-          className="flex gap-2 items-center mb-2 cursor-pointer hover:bg-gray-300 p-2 rounded-lg"
+          className="flex gap-2 items-center mb-2 cursor-pointer hover:bg-primary-foreground p-2 rounded-lg"
         >
           <img
             key={genre.id}
