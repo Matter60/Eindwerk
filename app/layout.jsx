@@ -26,7 +26,6 @@ export default function RootLayout({ children }) {
             <div className="hidden md:block">
               <GenreList />
             </div>
-            <div className="col-span4 md:col-span-3"></div>
           </div>
         </ThemeProvider>
       </body>

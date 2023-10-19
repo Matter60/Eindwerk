@@ -15,7 +15,6 @@ export async function getGenres() {
 
 export async function GenreList() {
   const genres = await getGenres();
-  console.log(genres);
   return (
     <div>
       <h2 className="text-[30px] font-bold">Genres</h2>
