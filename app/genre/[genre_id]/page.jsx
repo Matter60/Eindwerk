@@ -5,7 +5,9 @@ export default function Page() {
   const params = useParams();
   return (
     <>
-      <h1>Genre {params.genre_id}</h1>
+      <div>
+        <h1>Genre {params.genre_id}</h1>
+      </div>
     </>
   );
 }

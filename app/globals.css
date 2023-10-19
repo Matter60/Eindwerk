@@ -48,3 +48,15 @@
     --ring: 240 4.9% 83.9%;
   }
 }
+.main-content {
+  display: flex;
+}
+
+.left-column {
+  flex: 0 0 auto; /* Prevent it from growing */
+  margin-right: 20px; /* Adjust as needed */
+}
+
+.right-column {
+  flex: 1; /* Allow it to grow and take remaining space */
+}

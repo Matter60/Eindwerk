@@ -21,11 +21,11 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <NavBar />
-          {children}
-          <div className="grid grid-cols-4 px-5">
-            <div className="hidden md:block">
+          <div className="main-content">
+            <div className="left-column">
               <GenreList />
             </div>
+            <div className="right-column">{children}</div>
           </div>
         </ThemeProvider>
       </body>
