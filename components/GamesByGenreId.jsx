@@ -1,4 +1,5 @@
 import React from "react";
+// /games?key='+key+'&genres='+id
 
 function GamesByGenreId() {
   return (
