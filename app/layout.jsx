@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         >
           <NavBar />
           <div className="main-content">
-            <div className="left-column">
+            <div className="left-column px-4">
               <GenreList />
             </div>
             <div className="right-column">{children}</div>

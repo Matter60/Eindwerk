@@ -1,12 +1,13 @@
 "use client";
+import GameByGenreID from "@/components/GameByGenreID";
 import { useParams } from "next/navigation";
-
 export default function Page() {
-  const params = useParams();
+  const { genre_id } = useParams();
   return (
     <>
-      <div>
-        <h1>Genre {params.genre_id}</h1>
+      <div className="">
+        <h1>Genre {genre_id}</h1>
+        <GameByGenreID genre_id={genre_id} />
       </div>
     </>
   );
