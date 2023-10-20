@@ -39,15 +39,13 @@ export default function GameByGenreId(props) {
 
   return (
     <div className="min-h-screen relative px-5">
-      <h2 className="text-xl my-5 font-bold">
-        Games by genre {props.genre_id}
-      </h2>
+      <h2 className="text-xl my-5 font-bold"> {props.genre_id} Games</h2>
 
       {loading ? (
         <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
       ) : (
         <>
-          <div className="grid grid-cols-1 xl:grid-cols-5 2xl:grid-cols-6 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-6 md:grid-cols-2 gap-4">
             {games.map((game) => (
               <Link
                 href={`/game/${game.slug}`}
