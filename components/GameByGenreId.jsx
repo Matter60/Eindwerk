@@ -39,7 +39,7 @@ export default function GameByGenreId(props) {
 
   return (
     <div className="min-h-screen relative px-5">
-      <h2 className="text-xl my-5 font-bold"> {props.genre_id} Games</h2>
+      <h2 className="text-xl my-5 font-bold"> ... Games</h2>
 
       {loading ? (
         <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
