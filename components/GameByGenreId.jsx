@@ -37,9 +37,31 @@ export default function GameByGenreId(props) {
     });
   }, []);
 
+  const genreLabels = {
+    4: "Action",
+    51: "Indie",
+    3: "Adventure",
+    5: "RPG",
+    10: "Strategy",
+    2: "Shooter",
+    40: "Casual",
+    14: "Simulation",
+    7: "Puzzle",
+    11: "Arcade",
+    83: "Platformer",
+    59: "Massively Multiplayer",
+    1: "Racing",
+    15: "Sports",
+    6: "Fighting",
+    19: "Family",
+    28: "Board",
+    34: "Educational",
+    17: "Card",
+  }[props.genre_id];
+
   return (
     <div className="min-h-screen relative px-5">
-      <h2 className="text-xl my-5 font-bold"> ... Games</h2>
+      <h2 className="text-xl my-5 font-bold">{genreLabels} Games</h2>
 
       {loading ? (
         <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
