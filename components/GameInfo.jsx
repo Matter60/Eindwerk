@@ -12,6 +12,9 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 export default function GameBySlug(props) {
+  const createMarkup = (html) => {
+    return { __html: html };
+  };
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
@@ -40,7 +43,7 @@ export default function GameBySlug(props) {
           <h2 className="text-xl my-5 font-bold">{game.name}</h2>
 
           <img src={game.background_image} alt="" />
-          {game.description}
+          <div dangerouslySetInnerHTML={createMarkup(game.description)} />
         </>
       )}
     </div>
