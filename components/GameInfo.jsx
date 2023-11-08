@@ -43,7 +43,10 @@ export default function GameBySlug(props) {
           <h2 className="text-xl my-5 font-bold">{game.name}</h2>
 
           <img src={game.background_image} alt="" />
-          <div dangerouslySetInnerHTML={createMarkup(game.description)} />
+          <div
+            className="mt-12 p-2 text-left text-primary"
+            dangerouslySetInnerHTML={createMarkup(game.description)}
+          />
         </>
       )}
     </div>

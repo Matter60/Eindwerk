@@ -1,14 +1,4 @@
 "use client";
-import Link from "next/link";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
 import { ModeToggle } from "./dark-mode-toggle";
 import Image from "next/image";
 import { Search } from "lucide-react";

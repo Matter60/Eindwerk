@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <NavBar />
-          <div className="main-content">
+          <div className="main-content container">
             <div className="left-column px-4">
               <GenreList />
             </div>
