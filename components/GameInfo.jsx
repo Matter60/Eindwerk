@@ -44,9 +44,12 @@ export default function GameBySlug(props) {
 
           <img src={game.background_image} alt="" />
           <div
-            className="mt-12 p-2 text-left text-primary"
+            className="mt-12 text-left text-primary"
             dangerouslySetInnerHTML={createMarkup(game.description)}
           />
+          <Link href={game.website}>
+            <Button>Official site</Button>
+          </Link>
         </>
       )}
     </div>
