@@ -2,7 +2,7 @@
 import { ModeToggle } from "./dark-mode-toggle";
 import Image from "next/image";
 import { Search } from "lucide-react";
-import SearchBar from "./Searchbar";
+import SearchBar from "./SearchBar";
 
 function NavBar() {
   return (
