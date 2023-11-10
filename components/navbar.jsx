@@ -1,7 +1,6 @@
 "use client";
 import { ModeToggle } from "./dark-mode-toggle";
 import Image from "next/image";
-import { Search } from "lucide-react";
 import SearchBar from "./SearchBar";
 
 function NavBar() {
