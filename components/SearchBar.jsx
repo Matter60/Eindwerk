@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 
 export async function getGames(query) {
   const response = await fetch(
-    `https://api.rawg.io/api/search?key=${process.env.RAWG_API_KEY}&search=${query}`
+    `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&search=${query}`
   );
+
+  console.log(response);
 
   if (response.ok) {
     const data = await response.json();
