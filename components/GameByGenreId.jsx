@@ -10,6 +10,9 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import GameCard from "./GameCard";
+
+// ... (existing imports)
 
 export default function GameByGenreId(props) {
   const [games, setGames] = useState([]);
@@ -67,36 +70,14 @@ export default function GameByGenreId(props) {
         <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
       ) : (
         <>
-          <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-6 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-6 md:grid-cols-2 gap-4 mt-12">
             {games.map((game) => (
-              <Link
-                href={`/game/${game.slug}`}
-                key={game.id}
-                className="h-full"
-              >
-                <Card className="border border-muted h-full hover:bg-primary-foreground hover:scale-105 transition duration-100 hover:shadow-lg">
-                  <CardContent className="p-3">
-                    <div className="h-[187px] w-full">
-                      <img
-                        src={game.background_image}
-                        alt={game.name}
-                        className="rounded object-cover w-full h-full"
-                      />
-                    </div>
-
-                    <div className="my-3">
-                      <CardTitle>{game.name}</CardTitle>
-                      <CardDescription>{game.released}</CardDescription>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+              <GameCard game={game} key={game.id} />
             ))}
           </div>
-
           <div className="py-16 flex justify-center">
             <div className="flex space-x-3">
-              {page == 1 ? null : (
+              {page === 1 ? null : (
                 <Button variant="secondary" asChild>
                   <a
                     href={`/genre/${props.genre_id}?page=${page - 1}`}
