@@ -18,25 +18,31 @@ const GameCard = ({ game }) => (
           className="rounded object-cover w-full h-full"
         />
         {game.metacritic && (
-          <p
+          <div
             style={{
               backgroundColor: "#4CAF50",
+              color: "#fff",
               border: "2px solid #4CAF50",
-              padding: "4px",
+              padding: "2px",
               borderRadius: "4px",
               position: "absolute",
-              top: "0",
-              right: "0",
+              bottom: "8px",
+              right: "8px",
+              width: "30px",
+              height: "30px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             {game.metacritic}
-          </p>
+          </div>
         )}
       </div>
       <CardContent className="p-3">
         <div className="my-3">
           <CardTitle>{game.name}</CardTitle>
-          <CardDescription>{game.released}</CardDescription>
+          <CardDescription>Released on: {game.released}</CardDescription>
           {/* Add more details as needed */}
         </div>
       </CardContent>
