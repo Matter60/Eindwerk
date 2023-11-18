@@ -1,5 +1,5 @@
 "use client";
-import TrendingGames from "@/components/trendingGames";
+import TrendingGames from "@/components/TrendingGames";
 
 export default function Home() {
   return (
