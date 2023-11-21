@@ -7,20 +7,18 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
+
 import {
-  IconArrowLeft,
-  IconBrandAndroid,
-  IconBrandApple,
-  IconBrandFinder,
-  IconBrandUbuntu,
-  IconBrandXbox,
-  IconCpu,
-  IconDeviceLaptop,
-  IconDeviceNintendo,
-  IconPlaystationSquare,
-  IconWorldWww,
-  IconXboxA,
-} from "@tabler/icons-react";
+  FaComputer,
+  FaPlaystation,
+  FaXbox,
+  FaApple,
+  FaAppStoreIos,
+  FaUbuntu,
+} from "react-icons/fa6";
+import { BsNintendoSwitch } from "react-icons/bs";
+import { TbWorldWww } from "react-icons/tb";
+import { IoLogoAndroid } from "react-icons/io";
 
 const GameCard = ({ game }) => (
   <Link href={`/game/${game.slug}`} key={game.id} className="h-full">
@@ -61,23 +59,23 @@ const GameCard = ({ game }) => (
             <div className="mt-3 flex space-x-1">
               {game.parent_platforms.map((platform, index) =>
                 platform.platform.slug === "pc" ? (
-                  <IconDeviceLaptop />
+                  <FaComputer />
                 ) : platform.platform.slug === "playstation" ? (
-                  <IconPlaystationSquare />
+                  <FaPlaystation />
                 ) : platform.platform.slug === "xbox" ? (
-                  <IconBrandXbox />
+                  <FaXbox />
                 ) : platform.platform.slug === "ios" ? (
-                  <IconBrandApple />
+                  <FaAppStoreIos />
                 ) : platform.platform.slug === "mac" ? (
-                  <IconBrandFinder />
+                  <FaApple />
                 ) : platform.platform.slug === "linux" ? (
-                  <IconBrandUbuntu />
+                  <FaUbuntu />
                 ) : platform.platform.slug === "nintendo" ? (
-                  <IconDeviceNintendo />
+                  <BsNintendoSwitch />
                 ) : platform.platform.slug === "android" ? (
-                  <IconBrandAndroid />
+                  <IoLogoAndroid />
                 ) : platform.platform.slug === "web" ? (
-                  <IconWorldWww />
+                  <TbWorldWww />
                 ) : null
               )}
             </div>
