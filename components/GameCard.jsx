@@ -7,6 +7,20 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  IconArrowLeft,
+  IconBrandAndroid,
+  IconBrandApple,
+  IconBrandFinder,
+  IconBrandUbuntu,
+  IconBrandXbox,
+  IconCpu,
+  IconDeviceLaptop,
+  IconDeviceNintendo,
+  IconPlaystationSquare,
+  IconWorldWww,
+  IconXboxA,
+} from "@tabler/icons-react";
 
 const GameCard = ({ game }) => (
   <Link href={`/game/${game.slug}`} key={game.id} className="h-full">
@@ -42,8 +56,32 @@ const GameCard = ({ game }) => (
       <CardContent className="p-3">
         <div className="my-3">
           <CardTitle>{game.name}</CardTitle>
-          <CardDescription>Released on: {game.released}</CardDescription>
-          {/* Add more details as needed */}
+          <CardDescription>
+            Released on: {game.released}
+            <div className="mt-3 flex space-x-1">
+              {game.parent_platforms.map((platform, index) =>
+                platform.platform.slug === "pc" ? (
+                  <IconDeviceLaptop />
+                ) : platform.platform.slug === "playstation" ? (
+                  <IconPlaystationSquare />
+                ) : platform.platform.slug === "xbox" ? (
+                  <IconBrandXbox />
+                ) : platform.platform.slug === "ios" ? (
+                  <IconBrandApple />
+                ) : platform.platform.slug === "mac" ? (
+                  <IconBrandFinder />
+                ) : platform.platform.slug === "linux" ? (
+                  <IconBrandUbuntu />
+                ) : platform.platform.slug === "nintendo" ? (
+                  <IconDeviceNintendo />
+                ) : platform.platform.slug === "android" ? (
+                  <IconBrandAndroid />
+                ) : platform.platform.slug === "web" ? (
+                  <IconWorldWww />
+                ) : null
+              )}
+            </div>
+          </CardDescription>
         </div>
       </CardContent>
     </Card>
