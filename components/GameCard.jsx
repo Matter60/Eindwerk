@@ -19,6 +19,7 @@ import {
 import { BsNintendoSwitch } from "react-icons/bs";
 import { TbWorldWww } from "react-icons/tb";
 import { IoLogoAndroid } from "react-icons/io";
+import StarRating from "@/components/StarRating"; // Adjust the path accordingly
 
 const GameCard = ({ game }) => (
   <Link href={`/game/${game.slug}`} key={game.id} className="h-full ">
@@ -59,26 +60,31 @@ const GameCard = ({ game }) => (
             <div className="mt-3 flex space-x-1">
               {game.parent_platforms.map((platform, index) =>
                 platform.platform.slug === "pc" ? (
-                  <FaComputer />
+                  <FaComputer key={index} />
                 ) : platform.platform.slug === "playstation" ? (
-                  <FaPlaystation />
+                  <FaPlaystation key={index} />
                 ) : platform.platform.slug === "xbox" ? (
-                  <FaXbox />
+                  <FaXbox key={index} />
                 ) : platform.platform.slug === "ios" ? (
-                  <FaAppStoreIos />
+                  <FaAppStoreIos key={index} />
                 ) : platform.platform.slug === "mac" ? (
-                  <FaApple />
+                  <FaApple key={index} />
                 ) : platform.platform.slug === "linux" ? (
-                  <FaUbuntu />
+                  <FaUbuntu key={index} />
                 ) : platform.platform.slug === "nintendo" ? (
-                  <BsNintendoSwitch />
+                  <BsNintendoSwitch key={index} />
                 ) : platform.platform.slug === "android" ? (
-                  <IoLogoAndroid />
+                  <IoLogoAndroid key={index} />
                 ) : platform.platform.slug === "web" ? (
-                  <TbWorldWww />
+                  <TbWorldWww key={index} />
                 ) : null
               )}
             </div>
+            {game.rating && (
+              <div className="mt-3">
+                <StarRating rating={game.rating} />
+              </div>
+            )}
           </CardDescription>
         </div>
       </CardContent>
