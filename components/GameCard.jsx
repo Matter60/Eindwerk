@@ -21,7 +21,7 @@ import { TbWorldWww } from "react-icons/tb";
 import { IoLogoAndroid } from "react-icons/io";
 
 const GameCard = ({ game }) => (
-  <Link href={`/game/${game.slug}`} key={game.id} className="h-full">
+  <Link href={`/game/${game.slug}`} key={game.id} className="h-full ">
     <Card className="border border-muted h-full hover:bg-primary-foreground hover:scale-105 transition duration-100 hover:shadow-lg">
       <div className="relative h-[187px] w-full">
         <img

@@ -1,18 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
-import Link from "next/link";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import GameCard from "./GameCard";
-
-// ... (existing imports)
 
 export default function GameByGenreId(props) {
   const [games, setGames] = useState([]);
