@@ -1,6 +1,6 @@
 // StarRating.js
 import React from "react";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const StarRating = ({ rating }) => {
   const maxStars = 5;
@@ -16,10 +16,15 @@ const StarRating = ({ rating }) => {
 
     if (hasHalfStar) {
       stars.push(<FaStarHalfAlt key="half" />);
-    }
-
-    while (stars.length < maxStars) {
-      stars.push(<FaStar key={stars.length} />);
+      // Push an empty star for the last position
+      for (let i = fullStars + 1; i < maxStars; i++) {
+        stars.push(<FaRegStar key={i} />);
+      }
+    } else {
+      // If no half star, push empty stars for the remaining positions
+      for (let i = fullStars; i < maxStars; i++) {
+        stars.push(<FaRegStar key={i} />);
+      }
     }
 
     return stars;
