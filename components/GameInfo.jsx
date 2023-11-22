@@ -47,7 +47,7 @@ export default function GameBySlug(props) {
             className="mt-12 text-left text-primary"
             dangerouslySetInnerHTML={createMarkup(game.description)}
           />
-          <Link href={game.website}>
+          <Link href={game.website} target="_blank">
             <Button>Official site</Button>
           </Link>
         </>
