@@ -60,7 +60,7 @@ export default function GameBySlug(props) {
             href={game.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500"
+            className="mt-5"
           >
             Official site
           </Button>
