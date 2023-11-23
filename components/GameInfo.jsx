@@ -1,26 +1,18 @@
-"use client";
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
-import Link from "next/link";
 import { Button } from "./ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 export default function GameBySlug(props) {
   const createMarkup = (html) => {
     return { __html: html };
   };
+
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Haal het slug op van props
     const { slug } = props;
 
     fetch(
@@ -34,6 +26,10 @@ export default function GameBySlug(props) {
     });
   }, []);
 
+  const toggleShowDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
   return (
     <div className="min-h-screen relative px-5">
       {loading ? (
@@ -41,15 +37,33 @@ export default function GameBySlug(props) {
       ) : (
         <>
           <h2 className="text-xl my-5 font-bold">{game.name}</h2>
-
-          <img src={game.background_image} alt="" />
-          <div
-            className="mt-12 text-left text-primary"
-            dangerouslySetInnerHTML={createMarkup(game.description)}
-          />
-          <Link href={game.website} target="_blank">
-            <Button>Official site</Button>
-          </Link>
+          <div className="mt-12 text-left text-primary">
+            <div
+              dangerouslySetInnerHTML={createMarkup(
+                showFullDescription
+                  ? game.description_raw
+                  : game.description_raw.substring(0, 300) + "..."
+              )}
+            />
+            {game.description_raw.length > 300 && (
+              <p className="text-sm text-gray-600 mt-2">
+                <a
+                  onClick={toggleShowDescription}
+                  className="text-blue-500 cursor-pointer"
+                >
+                  {showFullDescription ? "Show Less" : "Show More"}
+                </a>
+              </p>
+            )}
+          </div>
+          <Button
+            href={game.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500"
+          >
+            Official site
+          </Button>
         </>
       )}
     </div>
