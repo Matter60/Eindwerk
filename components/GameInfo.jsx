@@ -29,7 +29,6 @@ export default function GameBySlug(props) {
   const toggleShowDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
-
   return (
     <div className="min-h-screen relative px-5">
       {loading ? (
@@ -56,14 +55,14 @@ export default function GameBySlug(props) {
               </p>
             )}
           </div>
-          <Button
+          <a
             href={game.website}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5"
           >
-            Official site
-          </Button>
+            <Button>Official site</Button>
+          </a>
         </>
       )}
     </div>
