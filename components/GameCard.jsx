@@ -57,6 +57,8 @@ const GameCard = ({ game }) => (
           <CardTitle>{game.name}</CardTitle>
           <CardDescription>
             Released on: {game.released}
+            <br />
+            Review count: {game.reviews_count}
             <div className="mt-3 flex space-x-1">
               {game.parent_platforms.map((platform, index) =>
                 platform.platform.slug === "pc" ? (

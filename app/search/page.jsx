@@ -5,13 +5,6 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import GameCard from "@/components/GameCard";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
-
 export default function Home() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(false); // Add loading state
@@ -22,10 +15,7 @@ export default function Home() {
     setLoading(true); // Set loading to true while fetching
     try {
       const response = await fetch(
-        `https://api.rawg.io/api/games?key=${
-          process.env.NEXT_PUBLIC_RAWG_API_KEY
-        }&search=${search}&page_size=32&page=${parseInt(
-          searchParams.get("page") || 1
+        `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&search=${search}
         )}`
       );
 
