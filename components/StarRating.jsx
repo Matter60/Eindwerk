@@ -8,9 +8,15 @@ const StarRating = ({ rating }) => {
 
   const renderStars = () => {
     let stars = [];
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<FaStar key={i} />);
+    //added this if statement so it will render 0 stars on the gamecard
+    if (rating === 0) {
+      for (let i = 0; i < maxStars; i++) {
+        stars.push(<FaRegStar key={i} />);
+      }
+    } else {
+      for (let i = 0; i < fullStars; i++) {
+        stars.push(<FaStar key={i} />);
+      }
     }
 
     if (hasHalfStar) {

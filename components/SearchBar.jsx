@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Combobox from "./Combobox";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
 
   return (
     <form action="/search" method="get" className="flex items-center space-x-2">
+      <Combobox />
       <Input
         type="text"
         name="q"
