@@ -37,7 +37,7 @@ export default function GameBySlug(props) {
         <>
           <h2 className="text-xl my-5 font-bold">{game.name}</h2>
           <img src={game.background_image} alt={game.name} />
-          <div className="mt-12 text-left text-primary">
+          <p className="mt-12 text-left text-primary">
             <div
               dangerouslySetInnerHTML={createMarkup(
                 showFullDescription
@@ -46,16 +46,14 @@ export default function GameBySlug(props) {
               )}
             />
             {game.description_raw.length > 300 && (
-              <p className="text-sm text-gray-600 mt-2">
-                <a
-                  onClick={toggleShowDescription}
-                  className="text-blue-500 cursor-pointer"
-                >
-                  {showFullDescription ? "Show Less" : "Show More"}
-                </a>
-              </p>
+              <a
+                onClick={toggleShowDescription}
+                className="text-blue-500 cursor-pointer"
+              >
+                {showFullDescription ? "Show Less" : "Show More"}
+              </a>
             )}
-          </div>
+          </p>
           <a
             href={game.website}
             target="_blank"
