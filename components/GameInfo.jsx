@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
+import { Badge } from "./ui/badge";
 
 export default function GameBySlug(props) {
   const createMarkup = (html) => {
@@ -35,33 +36,70 @@ export default function GameBySlug(props) {
         <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
       ) : (
         <>
-          <h2 className="text-xl my-5 font-bold">{game.name}</h2>
-          <img src={game.background_image} alt={game.name} />
-          <p className="mt-12 text-left text-primary">
-            <div
-              dangerouslySetInnerHTML={createMarkup(
-                showFullDescription
-                  ? game.description_raw
-                  : game.description_raw.substring(0, 300) + "..."
-              )}
-            />
-            {game.description_raw.length > 300 && (
-              <a
-                onClick={toggleShowDescription}
-                className="text-blue-500 cursor-pointer"
-              >
-                {showFullDescription ? "Show Less" : "Show More"}
-              </a>
-            )}
-          </p>
-          <a
-            href={game.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5"
-          >
-            <Button>Official site</Button>
-          </a>
+          <img src={game.background_image} />
+          <div className="max-w-5xl mx-auto px-4 py-8">
+            <h1 className="text-4xl font-bold">{game.name}</h1>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              {game.genres.map((genre) => (
+                <Badge key={genre.id}>{genre.name}</Badge>
+              ))}
+            </div>
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <p className="text-lg">
+                  {showFullDescription
+                    ? game.description_raw
+                    : game.description_raw.substring(0, 300) + "..."}
+                </p>
+                {game.description_raw.length > 300 && (
+                  <a
+                    onClick={toggleShowDescription}
+                    className="text-blue-500 cursor-pointer"
+                  >
+                    {showFullDescription ? "Show Less" : "Show More"}
+                  </a>
+                )}
+              </div>
+              <div>
+                <img
+                  alt={game.name}
+                  className="rounded-lg shadow-lg"
+                  src={game.background_image_additional}
+                />
+              </div>
+            </div>
+            <div className="mt-8">
+              <h2 className="text-2xl font-semibold">Alternative Names</h2>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {game.alternative_names.map((altName, index) => (
+                  <Badge key={index} variant="secondary">
+                    {altName}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            <div className="mt-8">
+              <h2 className="text-2xl font-semibold">Game Stats</h2>
+              <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                  <h3 className="text-lg font-medium">Achievements</h3>
+                  <p className="text-lg">{game.achievements_count}</p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium">Players</h3>
+                  <p className="text-lg">{game.added}</p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium">Additions</h3>
+                  <p className="text-lg">{game.additions_count}</p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium">Creators</h3>
+                  <p className="text-lg">{game.creators_count}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </div>
