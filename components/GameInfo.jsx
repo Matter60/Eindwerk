@@ -3,12 +3,21 @@ import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
 import { Badge } from "./ui/badge";
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
 export default function GameBySlug(props) {
   const createMarkup = (html) => {
     return { __html: html };
   };
 
   const [game, setGame] = useState(null);
+  const [screenshots, setScreenshots] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const searchParams = useSearchParams();
@@ -16,6 +25,7 @@ export default function GameBySlug(props) {
   useEffect(() => {
     const { slug } = props;
 
+    // First API request for game information
     fetch(
       `https://api.rawg.io/api/games/${slug}?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
     ).then((response) => {
@@ -25,7 +35,17 @@ export default function GameBySlug(props) {
         setLoading(false);
       });
     });
-  }, []);
+
+    // Second API request for screenshots
+    fetch(
+      `https://api.rawg.io/api/games/${slug}/screenshots?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
+    ).then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        setScreenshots(data.results);
+      });
+    });
+  }, [props.slug]);
 
   const toggleShowDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -61,11 +81,25 @@ export default function GameBySlug(props) {
                 )}
               </div>
               <div>
-                <img
-                  alt={game.name}
-                  className="rounded-lg shadow-lg"
-                  src={game.background_image_additional}
-                />
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                >
+                  <CarouselContent>
+                    {screenshots.map((screenshot, index) => (
+                      <CarouselItem key={index}>
+                        <img
+                          src={screenshot.image}
+                          className="rounded-lg w-full"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
               </div>
             </div>
             <div className="mt-8">
