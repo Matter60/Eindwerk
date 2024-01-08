@@ -2,6 +2,7 @@
 import { ModeToggle } from "./dark-mode-toggle";
 import Image from "next/image";
 import SearchBar from "./SearchBar";
+import { SignInButton } from "@clerk/nextjs";
 
 function NavBar() {
   return (
@@ -29,6 +30,7 @@ function NavBar() {
         </div>
         <SearchBar />
         <ModeToggle />
+        <SignInButton>Sign in</SignInButton>
       </div>
     </div>
   );

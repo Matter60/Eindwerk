@@ -15,7 +15,7 @@ export default function SearchBar() {
         className="px-3 py-2 w-80"
         placeholder="Search..."
       />
-      <Button type="submit" className="px-3 py-2">
+      <Button type="submit" className="px-3 py-2 rounded-lg">
         Search
       </Button>
     </form>

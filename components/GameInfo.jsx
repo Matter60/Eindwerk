@@ -103,16 +103,6 @@ export default function GameBySlug(props) {
               </div>
             </div>
             <div className="mt-8">
-              <h2 className="text-2xl font-semibold">Alternative Names</h2>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {game.alternative_names.map((altName, index) => (
-                  <Badge key={index} variant="secondary">
-                    {altName}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-            <div className="mt-8">
               <h2 className="text-2xl font-semibold">Game Stats</h2>
               <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
