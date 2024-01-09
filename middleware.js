@@ -1,9 +1,4 @@
-import { authMiddleware } from "@clerk/nextjs";
-
-export default authMiddleware({
-  publicRoutes: ["/**"],
-});
-
+// Remove authMiddleware from the default export
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: [], // Empty array means all routes are public
 };
