@@ -1,4 +1,4 @@
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -10,7 +10,7 @@ export const metadata = {
   title: "Gameportal",
   description: "Browse games and more",
   icons: {
-    icon: "/logo.ico",
+    icon: "logo.ico",
   },
 };
 
