@@ -1,12 +1,27 @@
 "use client";
 import { useUser } from "@clerk/clerk-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./dark-mode-toggle";
 import Image from "next/image";
 import SearchBar from "./SearchBar";
 import { SignInButton, SignOutButton, UserButton } from "@clerk/nextjs";
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
+
+// ... (other imports)
 
 function NavBar() {
   const { user } = useUser();
+
+  const handleSignOut = async () => {
+    // Implement your sign-out logic here
+  };
 
   return (
     <div className="sticky top-0 z-50 w-full border-b bg-background/95 p-2 backdrop-blur dark:border-zinc-800">
@@ -15,7 +30,7 @@ function NavBar() {
           <a href="/">
             <Image
               src="/logo.svg"
-              className="flex items-center dark:hidden" // Aangepaste breedte, hoogte behouden
+              className="flex items-center dark:hidden"
               alt="Logo"
               href="/"
               width={120}
@@ -23,7 +38,7 @@ function NavBar() {
             />
             <Image
               src="/logo-white.svg"
-              className="items-center hidden dark:block" // Aangepaste breedte, hoogte behouden
+              className="items-center hidden dark:block"
               alt="Logo"
               href="/"
               width={120}
@@ -31,16 +46,28 @@ function NavBar() {
             />
           </a>
         </div>
+        <ModeToggle /> {/* Moved ModeToggle outside the DropdownMenu */}
         <SearchBar />
-        <ModeToggle />
-
-        {/* Conditional rendering for sign-in and sign-out buttons */}
         {user ? (
-          <SignOutButton>Sign out</SignOutButton>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <UserButton />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-20">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <ModeToggle />
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <SignOutButton onClick={handleSignOut}>Sign out</SignOutButton>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
-          <SignInButton>Sign in</SignInButton>
+          <Button>
+            <SignInButton>Sign in</SignInButton>
+          </Button>
         )}
-        <UserButton />
       </div>
     </div>
   );
