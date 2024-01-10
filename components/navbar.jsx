@@ -46,7 +46,6 @@ function NavBar() {
             />
           </a>
         </div>
-        <ModeToggle /> {/* Moved ModeToggle outside the DropdownMenu */}
         <SearchBar />
         {user ? (
           <DropdownMenu>
