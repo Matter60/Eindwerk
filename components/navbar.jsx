@@ -12,16 +12,10 @@ import { ModeToggle } from "./dark-mode-toggle";
 import Image from "next/image";
 import SearchBar from "./SearchBar";
 import { SignInButton, SignOutButton, UserButton } from "@clerk/nextjs";
-import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
-
-// ... (other imports)
 
 function NavBar() {
   const { user } = useUser();
-
-  const handleSignOut = async () => {
-    // Implement your sign-out logic here
-  };
+  const handleSignOut = async () => {};
 
   return (
     <div className="sticky top-0 z-50 w-full border-b bg-background/95 p-2 backdrop-blur dark:border-zinc-800">
