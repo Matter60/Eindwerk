@@ -47,6 +47,18 @@ export default function GameBySlug(props) {
     });
   }, [props.slug]);
 
+  const addWishlist = () => {
+    fetch("/api/wishlist", {
+      method: "POST",
+      body: JSON.stringify({ game_id: game.id }),
+      contentType: "application/json",
+    }).then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+      });
+    });
+  };
+
   const toggleShowDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
@@ -80,6 +92,7 @@ export default function GameBySlug(props) {
                   </a>
                 )}
               </div>
+              <Button onClick={addWishlist}>Add to Wishlist</Button>
               <div>
                 <Carousel
                   opts={{

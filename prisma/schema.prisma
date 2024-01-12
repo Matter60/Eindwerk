@@ -10,34 +10,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  user      User     @relation(fields: [authorId], references: [id])
-  tags      Tag[]
+model Wishlist {
+  id      Int    @id @default(autoincrement())
+  user_id String @db.VarChar(255)
+  game_id String @db.VarChar(255)
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  userId Int     @unique
-  user   User    @relation(fields: [userId], references: [id])
-}
+// model Post {
+//   id        Int      @id @default(autoincrement())
+//   title     String   @db.VarChar(255)
+//   createdAt DateTime @default(now()) @db.Timestamp(6)
+//   content   String?
+//   published Boolean  @default(false)
+//   authorId  Int
+//   user      User     @relation(fields: [authorId], references: [id])
+//   tags      Tag[]
+// }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  name    String?  @db.VarChar(255)
-  email   String   @unique @db.VarChar(255)
-  post    Post[]
-  profile Profile?
-}
+// model Profile {
+//   id     Int     @id @default(autoincrement())
+//   bio    String?
+//   userId Int     @unique
+//   user   User    @relation(fields: [userId], references: [id])
+// }
 
-model Tag {
-  id    Int    @id @default(autoincrement())
-  name  String
-  posts Post[]
-}
+// model User {
+//   id      Int      @id @default(autoincrement())
+//   name    String?  @db.VarChar(255)
+//   email   String   @unique @db.VarChar(255)
+//   post    Post[]
+//   profile Profile?
+// }
+
+// model Tag {
+//   id    Int    @id @default(autoincrement())
+//   name  String
+//   posts Post[]
+// }
