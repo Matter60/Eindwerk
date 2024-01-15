@@ -30,7 +30,6 @@ export default function GameBySlug(props) {
       `https://api.rawg.io/api/games/${slug}?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
     ).then((response) => {
       response.json().then((data) => {
-        console.log(data);
         setGame(data);
         setLoading(false);
       });
@@ -41,7 +40,6 @@ export default function GameBySlug(props) {
       `https://api.rawg.io/api/games/${slug}/screenshots?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
     ).then((response) => {
       response.json().then((data) => {
-        console.log(data);
         setScreenshots(data.results);
       });
     });
@@ -51,7 +49,9 @@ export default function GameBySlug(props) {
     fetch("/api/wishlist", {
       method: "POST",
       body: JSON.stringify({ game_id: game.id }),
-      contentType: "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }).then((response) => {
       response.json().then((data) => {
         console.log(data);
@@ -92,7 +92,6 @@ export default function GameBySlug(props) {
                   </a>
                 )}
               </div>
-              <Button onClick={addWishlist}>Add to Wishlist</Button>
               <div>
                 <Carousel
                   opts={{
@@ -114,6 +113,7 @@ export default function GameBySlug(props) {
                   <CarouselNext />
                 </Carousel>
               </div>
+              <Button onClick={addWishlist}>Add to Wishlist</Button>
             </div>
             <div className="mt-8">
               <h2 className="text-2xl font-semibold">Game Stats</h2>
