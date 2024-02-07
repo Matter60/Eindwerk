@@ -61,7 +61,7 @@ export default function GameByGenreId(props) {
         <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
       ) : (
         <>
-          <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-6 md:grid-cols-2 gap-4 mt-12">
+          <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-12">
             {games.map((game) => (
               <GameCard game={game} key={game.id} />
             ))}

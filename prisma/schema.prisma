@@ -13,7 +13,7 @@ datasource db {
 model Wishlist {
   id      Int    @id @default(autoincrement())
   user_id String @db.VarChar(255)
-  game_id String @db.VarChar(255)
+  game_id Int    @db.Int
 }
 
 // model Post {

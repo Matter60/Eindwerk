@@ -13,25 +13,19 @@ export async function POST(req) {
   if (!data) return NextResponse.error(400, "No data provided");
 
   console.log(userId);
-  prisma.whishlist.create({
-    data: {},
-  });
+  prisma.wishlist
+    .create({
+      data: {
+        user_id: userId,
+        game_id: data.game_id,
+      },
+    })
+    .then((result) => {
+      console.log("Wishlist item created:", result);
+    })
+    .catch((error) => {
+      console.error("Error creating wishlist item:", error);
+    });
 
   return NextResponse.json(data);
 }
-
-/*export async function POST(req) {
-  const data = await req.json();
-
-  const { sessionId, getToken } = await req.auth;
-
-  console.log(data, sessionId, userId);
-
-  if (!data) return NextResponse.error(400, "No data provided");
-
-  prisma.whishlist.create({
-    data: {},
-  });
-
-  return NextResponse.json(data);
-}*/
