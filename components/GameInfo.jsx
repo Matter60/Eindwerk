@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
 import { Badge } from "./ui/badge";
+import { useToast } from "@/components/ui/use-toast";
 
 import {
   Carousel,
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/carousel";
 
 export default function GameBySlug(props) {
+  const { toast } = useToast();
   const createMarkup = (html) => {
     return { __html: html };
   };
@@ -45,7 +47,7 @@ export default function GameBySlug(props) {
     });
   }, [props.slug]);
 
-  const addWishlist = () => {
+  const addWishlist = (callback) => {
     fetch("/api/wishlist", {
       method: "POST",
       body: JSON.stringify({ game_id: game.id }),
@@ -53,12 +55,37 @@ export default function GameBySlug(props) {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
+      if (response.ok) {
+        response.json().then((data) => {
+          console.log(data);
+          // Voer de callback uit als het toevoegen aan de verlanglijst is gelukt
+          callback("success", data);
+        });
+      } else {
+        response.json().then((errorData) => {
+          console.error(errorData);
+          // Voer de callback uit en geef het statusniveau door op basis van errorData
+          callback(errorData ? "warning" : "error");
+        });
+      }
+    });
+  };
+  const handleAddToWishlist = () => {
+    addWishlist((status, data) => {
+      // Toon de juiste toast op basis van het statusniveau
+      toast({
+        title:
+          status === "success" && !data.error
+            ? "Added to Wishlist"
+            : "Already in Wishlist",
+        description:
+          status === "success" && !data.error
+            ? "The game has been added to your wishlist"
+            : "The game is already in your wishlist",
+        status: status,
       });
     });
   };
-
   const toggleShowDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
@@ -113,7 +140,7 @@ export default function GameBySlug(props) {
                   <CarouselNext />
                 </Carousel>
               </div>
-              <Button onClick={addWishlist}>Add to Wishlist</Button>
+              <Button onClick={handleAddToWishlist}>Add to Wishlist</Button>
             </div>
             <div className="mt-8">
               <h2 className="text-2xl font-semibold">Game Stats</h2>

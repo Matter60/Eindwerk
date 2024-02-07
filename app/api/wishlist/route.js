@@ -12,6 +12,16 @@ export async function POST(req) {
 
   if (!data) return NextResponse.error(400, "No data provided");
 
+  const wishlist = await prisma.wishlist.findFirst({
+    where: {
+      user_id: userId,
+      game_id: data.game_id,
+    },
+  });
+
+  if (wishlist) {
+    return NextResponse.json({ error: "Already wishlisted" });
+  }
   console.log(userId);
   prisma.wishlist
     .create({

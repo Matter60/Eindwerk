@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import NavBar from "@/components/navbar";
 import GenreList from "@/components/GenreList";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
               </div>
               <div className="right-column">{children}</div>
             </div>
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

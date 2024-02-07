@@ -1,17 +1,31 @@
 "use client";
+import { User, LogOut, Library, LogIn } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./dark-mode-toggle";
 import Image from "next/image";
 import SearchBar from "./SearchBar";
-import { SignInButton, SignOutButton, UserButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignOutButton,
+  UserButton,
+  UserProfile,
+  SignedIn,
+} from "@clerk/nextjs";
 
 function NavBar() {
   const { user } = useUser();
@@ -42,22 +56,37 @@ function NavBar() {
         </div>
         <SearchBar />
         {user ? (
-          <DropdownMenu>
+          <DropdownMenu className="outline-none">
             <DropdownMenuTrigger>
               <UserButton />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-20">
+            <DropdownMenuContent className="w-2)">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <ModeToggle />
+                <User className="mr-2 h-4 w-4" />
+                <SignedIn>
+                  <span>user moet</span>
+                </SignedIn>
               </DropdownMenuItem>
+
               <DropdownMenuItem>
-                <SignOutButton onClick={handleSignOut}>Sign out</SignOutButton>
+                <Library className="mr-2 h-4 w-4" />
+                <a href="/library">Library</a>
+              </DropdownMenuItem>
+              {/* <DropdownMenuItem>
+                {/*<ModeToggle className="text-[12px]" />  
+              </DropdownMenuItem> */}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <LogOut className="mr-2 h-4 w-4" />
+                <SignOutButton onClick={handleSignOut}>Log out</SignOutButton>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
           <Button>
+            <LogIn className="mr-2 h-4 w-4" />
             <SignInButton>Sign in</SignInButton>
           </Button>
         )}
