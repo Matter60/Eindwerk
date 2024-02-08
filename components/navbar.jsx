@@ -23,7 +23,6 @@ import {
   SignInButton,
   SignOutButton,
   UserButton,
-  UserProfile,
   SignedIn,
 } from "@clerk/nextjs";
 
