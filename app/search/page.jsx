@@ -46,7 +46,7 @@ export default function Home() {
           {search && (
             <>
               <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-                Search results for "{search}"
+                Search results for &quot;{search}&quot;
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
                 {games.map((game) => (
