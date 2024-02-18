@@ -11,9 +11,17 @@ datasource db {
 }
 
 model Wishlist {
-  id      Int    @id @default(autoincrement())
-  user_id String @db.VarChar(255)
-  game_id Int    @db.Int
+  id               Int    @id @default(autoincrement())
+  user_id          String @db.VarChar(255)
+  game_id          Int    @db.Int
+  slug             String @db.VarChar(255)
+  background_image String @db.VarChar(255)
+  name             String @db.VarChar(255)
+  metacritic       Int?   @db.Int
+  released         String @db.VarChar(255)
+  reviews_count    Int?   @db.Int
+  parent_platforms Json
+  rating           Int?   @db.Int
 }
 
 // model Post {

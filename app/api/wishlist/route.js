@@ -16,6 +16,7 @@ export async function POST(req) {
     where: {
       user_id: userId,
       game_id: data.game_id,
+      slug: data.slug,
     },
   });
 
@@ -28,6 +29,14 @@ export async function POST(req) {
       data: {
         user_id: userId,
         game_id: data.game_id,
+        slug: data.slug,
+        name: data.name,
+        background_image: data.background_image,
+        released: data.released,
+        metacritic: data.metacritic,
+        reviews_count: data.reviews_count,
+        parent_platforms: data.parent_platforms,
+        rating: data.rating,
       },
     })
     .then((result) => {
@@ -38,4 +47,26 @@ export async function POST(req) {
     });
 
   return NextResponse.json(data);
+}
+
+export async function GET() {
+  const { userId } = auth();
+
+  if (!userId) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const wishlistItems = await prisma.wishlist.findMany({
+    where: {
+      user_id: userId,
+    },
+  });
+
+  if (wishlistItems.length > 0) {
+    return new Response(JSON.stringify(wishlistItems), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } else {
+    return new Response("No wishlist items found", { status: 404 });
+  }
 }

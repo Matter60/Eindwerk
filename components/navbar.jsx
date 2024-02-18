@@ -26,6 +26,7 @@ import {
   SignedIn,
 } from "@clerk/nextjs";
 
+import Link from "next/link";
 function NavBar() {
   const { user } = useUser();
   const handleSignOut = async () => {};
@@ -39,7 +40,6 @@ function NavBar() {
               src="/logo.svg"
               className="flex items-center dark:hidden"
               alt="Logo"
-              href="/"
               width={120}
               height={80}
             />
@@ -47,7 +47,6 @@ function NavBar() {
               src="/logo-white.svg"
               className="items-center hidden dark:block"
               alt="Logo"
-              href="/"
               width={120}
               height={80}
             />
@@ -69,10 +68,13 @@ function NavBar() {
                 </SignedIn>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
-                <Library className="mr-2 h-4 w-4" />
-                <a href="/library">Library</a>
+              <DropdownMenuItem asChild>
+                <Link href="/library">
+                  <Library className="mr-2 h-4 w-4" />
+                  <p>Library</p>
+                </Link>
               </DropdownMenuItem>
+
               {/* <DropdownMenuItem>
                 {/*<ModeToggle className="text-[12px]" />  
               </DropdownMenuItem> */}

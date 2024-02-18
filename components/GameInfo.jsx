@@ -50,7 +50,17 @@ export default function GameBySlug(props) {
   const addWishlist = (callback) => {
     fetch("/api/wishlist", {
       method: "POST",
-      body: JSON.stringify({ game_id: game.id }),
+      body: JSON.stringify({
+        game_id: game.id,
+        slug: game.slug,
+        name: game.name,
+        background_image: game.background_image,
+        released: game.released,
+        metacritic: game.metacritic,
+        reviews_count: game.reviews_count,
+        parent_platforms: game.parent_platforms,
+        rating: game.rating,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -89,6 +99,7 @@ export default function GameBySlug(props) {
   const toggleShowDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
+
   return (
     <div className="min-h-screen relative px-5">
       {loading ? (
