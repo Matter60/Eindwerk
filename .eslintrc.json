@@ -1,53 +1,53 @@
-// THis is a eslint json config file, configure it for nextjs
 {
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+      "next",
+      "next/core-web-vitals",
+      "eslint:recommended",
+      "plugin:react/recommended"
     ],
     "parser": "@babel/eslint-parser",
     "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "requireConfigFile": false,
-        "babelOptions": {
-            "presets": ["@babel/preset-react"]
-        }
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "requireConfigFile": false,
+      "babelOptions": {
+        "presets": ["@babel/preset-react"]
+      }
     },
     "env": {
-        "browser": true,
-        "node": true,
-        "es6": true
+      "browser": true,
+      "node": true,
+      "es6": true
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react"],
     "rules": {
-        "react/prop-types": 0,
-        "react/react-in-jsx-scope": 0,
-        "no-console": "error",
-        "no-unused-vars": 0,
-        "no-undef": 0,
-        "no-useless-escape": 0,
-        "no-prototype-builtins": 0,
-        "no-empty": 0,
-        "no-constant-condition": 0,
-        "no-async-promise-executor": 0,
-        "no-irregular-whitespace": 0,
-        "no-mixed-spaces-and-tabs": 0,
-        "no-unreachable": 0,
-        "no-unsafe-negation": 0,
-        "no-unsafe-finally": 0,
-        "no-unsafe-optional-chaining": 0,
-        "no-unsafe-assignment": 0,
-        "no-unsafe-call": 0,
-        "no-unsafe-member-access": 0,
-        "no-unsafe-return": 0,
-        "no-throw-literal": 0,
-        "no-extra-semi": 0,
-        "no-extra-boolean-cast": 0,
-        "no-undefined": "error"
+      "react/prop-types": 0,
+      "react/react-in-jsx-scope": 0,
+      "no-console": "error",
+      "no-unused-vars": 0,
+      "no-undef": 0,
+      "no-useless-escape": 0,
+      "no-prototype-builtins": 0,
+      "no-empty": 0,
+      "no-constant-condition": 0,
+      "no-async-promise-executor": 0,
+      "no-irregular-whitespace": 0,
+      "no-mixed-spaces-and-tabs": 0,
+      "no-unreachable": 0,
+      "no-unsafe-negation": 0,
+      "no-unsafe-finally": 0,
+      "no-unsafe-optional-chaining": 0,
+      "no-unsafe-assignment": 0,
+      "no-unsafe-call": 0,
+      "no-unsafe-member-access": 0,
+      "no-unsafe-return": 0,
+      "no-throw-literal": 0,
+      "no-extra-semi": 0,
+      "no-extra-boolean-cast": 0,
+      "no-undefined": "error"
     }
-}
+  }
+  
