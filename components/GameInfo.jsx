@@ -102,16 +102,17 @@ export default function GameBySlug(props) {
   };
 
   return (
-    <div className="min-h-screen relative px-5">
+    <div className="min-h-screen relative px-5 mt-4">
       {loading ? (
         <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
       ) : (
         <>
           <Image
             alt="Background"
-            fill
-            className="object-cover"
+            className="rounded object-cover w-full h-full"
             src={game.background_image}
+            width={1920}
+            height={1080}
           />
           <div className="max-w-5xl mx-auto px-4 py-8">
             <h1 className="text-4xl font-bold">{game.name}</h1>
@@ -144,14 +145,18 @@ export default function GameBySlug(props) {
                   }}
                 >
                   <CarouselContent>
-                    {screenshots.map((screenshot, index) => (
-                      <CarouselItem key={index}>
-                        <img
-                          src={screenshot.image}
-                          className="rounded-lg w-full"
-                        />
-                      </CarouselItem>
-                    ))}
+                    {screenshots &&
+                      screenshots.map((screenshot, index) => (
+                        <CarouselItem key={index}>
+                          <Image
+                            src={screenshot.image}
+                            className="rounded-lg w-full"
+                            alt={game.name}
+                            width={1920}
+                            height={1080}
+                          />
+                        </CarouselItem>
+                      ))}
                   </CarouselContent>
                   <CarouselPrevious />
                   <CarouselNext />

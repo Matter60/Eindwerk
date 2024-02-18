@@ -29,8 +29,10 @@ const GameCard = ({ game }) => (
         <Image
           src={game.background_image}
           alt={game.name}
-          fill
           className="rounded object-cover"
+          fill="responsive"
+          sizes="100%"
+          priority={true}
         />
         {game.metacritic && (
           <div

@@ -30,7 +30,7 @@ const Page = () => {
   return (
     <div>
       <h1 className="text-xl my-5 font-bold">Trending Games</h1>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-12">
         {trendingGames.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}

@@ -42,7 +42,7 @@ function NavBar() {
               alt="Logo"
               width={120}
               height={80}
-              priority="true"
+              priority={true}
             />
             <Image
               src="/logo-white.svg"
@@ -50,7 +50,7 @@ function NavBar() {
               alt="Logo"
               width={120}
               height={80}
-              priority="true"
+              priority={true}
             />
           </a>
         </div>
