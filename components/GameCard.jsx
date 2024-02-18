@@ -20,15 +20,17 @@ import { BsNintendoSwitch } from "react-icons/bs";
 import { TbWorldWww } from "react-icons/tb";
 import { IoLogoAndroid } from "react-icons/io";
 import StarRating from "@/components/StarRating"; // Adjust the path accordingly
+import Image from "next/image";
 
 const GameCard = ({ game }) => (
   <Link href={`/game/${game.slug}`} key={game.id} className="h-full ">
     <Card className="border border-muted h-full hover:bg-primary-foreground hover:scale-105 transition duration-100 hover:shadow-lg">
       <div className="relative h-[187px] w-full">
-        <img
+        <Image
           src={game.background_image}
           alt={game.name}
-          className="rounded object-cover w-full h-full"
+          fill
+          className="rounded object-cover"
         />
         {game.metacritic && (
           <div

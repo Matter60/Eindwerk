@@ -11,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Image from "next/image";
 
 export default function GameBySlug(props) {
   const { toast } = useToast();
@@ -106,7 +107,12 @@ export default function GameBySlug(props) {
         <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
       ) : (
         <>
-          <img src={game.background_image} />
+          <Image
+            alt="Background"
+            fill
+            className="object-cover"
+            src={game.background_image}
+          />
           <div className="max-w-5xl mx-auto px-4 py-8">
             <h1 className="text-4xl font-bold">{game.name}</h1>
             <div className="mt-4 flex flex-wrap items-center gap-2">
