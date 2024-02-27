@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
 import { Badge } from "./ui/badge";
 import { useToast } from "@/components/ui/use-toast";
+import { useUser } from "@clerk/clerk-react";
 
 import {
   Carousel,
@@ -15,6 +16,9 @@ import Image from "next/image";
 
 export default function GameBySlug(props) {
   const { toast } = useToast();
+  const user = useUser();
+  console.log(user);
+
   const createMarkup = (html) => {
     return { __html: html };
   };
@@ -162,7 +166,16 @@ export default function GameBySlug(props) {
                   <CarouselNext />
                 </Carousel>
               </div>
-              <Button onClick={handleAddToWishlist}>Add to Wishlist</Button>
+              <Button
+                onClick={handleAddToWishlist}
+                style={
+                  user && user.isSignedIn
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                Add to Wishlist
+              </Button>
             </div>
             <div className="mt-8">
               <h2 className="text-2xl font-semibold">Game Stats</h2>
