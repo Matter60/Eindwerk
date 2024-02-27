@@ -17,7 +17,6 @@ import Image from "next/image";
 export default function GameBySlug(props) {
   const { toast } = useToast();
   const user = useUser();
-  console.log(user);
 
   const createMarkup = (html) => {
     return { __html: html };

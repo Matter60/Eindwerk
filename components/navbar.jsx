@@ -27,6 +27,7 @@ import {
 } from "@clerk/nextjs";
 
 import Link from "next/link";
+import { ThemeProvider } from "./theme-provider";
 function NavBar() {
   const { user } = useUser();
   const handleSignOut = async () => {};
@@ -55,6 +56,7 @@ function NavBar() {
           </a>
         </div>
         <SearchBar />
+        <ModeToggle className="text-[12px]" />
         {user ? (
           <DropdownMenu className="outline-none">
             <DropdownMenuTrigger>
@@ -65,9 +67,7 @@ function NavBar() {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <User className="mr-2 h-4 w-4" />
-                <SignedIn>
-                  <span>user moet</span>
-                </SignedIn>
+                <SignedIn>{user.fullName}</SignedIn>
               </DropdownMenuItem>
 
               <DropdownMenuItem asChild>
@@ -76,10 +76,6 @@ function NavBar() {
                   <p>Library</p>
                 </Link>
               </DropdownMenuItem>
-
-              {/* <DropdownMenuItem>
-                {/*<ModeToggle className="text-[12px]" />  
-              </DropdownMenuItem> */}
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <LogOut className="mr-2 h-4 w-4" />
