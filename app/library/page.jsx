@@ -21,6 +21,27 @@ export default function Page() {
         console.error("Error fetching wishlist:", error);
       });
   };
+
+  const deleteWishlist = (game_id, slug) => {
+    fetch("/api/wishlist", {
+      method: "DELETE",
+      body: JSON.stringify({
+        game_id: game_id,
+        slug: slug,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        getWishlist();
+      })
+      .catch((error) => {
+        console.error("Error deleting wishlist item:", error);
+      });
+  };
   console.log(games);
 
   useEffect(() => {

@@ -70,3 +70,41 @@ export async function GET() {
     return new Response("No wishlist items found", { status: 404 });
   }
 }
+
+export async function DELETE(req) {
+  const { userId } = auth();
+  const data = await req.json();
+
+  if (!userId) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  if (!data) return NextResponse.error(400, "No data provided");
+
+  const wishlist = await prisma.wishlist.findFirst({
+    where: {
+      user_id: userId,
+      game_id: data.game_id,
+      slug: data.slug,
+    },
+  });
+
+  if (!wishlist) {
+    return NextResponse.error(404, "Wishlist item not found");
+  }
+
+  prisma.wishlist
+    .delete({
+      where: {
+        game_id: wishlist.game_id,
+      },
+    })
+    .then((result) => {
+      console.log("Wishlist item deleted:", result);
+    })
+    .catch((error) => {
+      console.error("Error deleting wishlist item:", error);
+    });
+
+  return NextResponse.json(data);
+}
