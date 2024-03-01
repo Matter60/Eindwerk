@@ -94,8 +94,8 @@ export default function GameBySlug(props) {
             : "Already in Wishlist",
         description:
           status === "success" && !data.error
-            ? "The game has been added to your wishlist"
-            : "The game is already in your wishlist",
+            ? "This game has been added to your wishlist"
+            : "This game is already in your wishlist",
         status: status,
       });
     });

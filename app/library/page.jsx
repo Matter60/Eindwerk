@@ -62,7 +62,12 @@ export default function Page() {
         <TabsContent value="wishlist">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
             {games.map((game, index) => (
-              <GameCard key={index} game={game} />
+              <GameCard
+                key={index}
+                game={game}
+                onDelete={deleteWishlist} // Pass the deleteWishlist function
+                isLibrary={true} // Set isLibrary prop to true
+              />
             ))}
           </div>
         </TabsContent>
