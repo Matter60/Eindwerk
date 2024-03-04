@@ -84,7 +84,7 @@ export async function DELETE(req) {
   const wishlist = await prisma.wishlist.findFirst({
     where: {
       user_id: userId,
-      game_id: data.game_id,
+      game_id: data.id,
       slug: data.slug,
     },
   });
@@ -96,7 +96,9 @@ export async function DELETE(req) {
   prisma.wishlist
     .delete({
       where: {
+        id: wishlist.id,
         game_id: wishlist.game_id,
+        slug: wishlist.slug,
       },
     })
     .then((result) => {

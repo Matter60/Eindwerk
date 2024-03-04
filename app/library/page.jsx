@@ -22,11 +22,11 @@ export default function Page() {
       });
   };
 
-  const deleteWishlist = (game_id, slug) => {
+  const deleteWishlist = (id, slug) => {
     fetch("/api/wishlist", {
       method: "DELETE",
       body: JSON.stringify({
-        game_id: game_id,
+        game_id: id,
         slug: slug,
       }),
       headers: {
