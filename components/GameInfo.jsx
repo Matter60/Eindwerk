@@ -49,6 +49,15 @@ export default function GameBySlug(props) {
         setScreenshots(data.results);
       });
     });
+
+    // Third API request for stores that sell the games
+    fetch(
+      `https://api.rawg.io/api/games/${slug}/stores?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
+    ).then((response) => {
+      response.json().then((data) => {
+        console.log(data.results);
+      });
+    });
   }, [props.slug]);
 
   const addWishlist = (callback) => {
