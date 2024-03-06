@@ -48,7 +48,6 @@ export async function POST(req) {
 
   return NextResponse.json(data);
 }
-
 export async function GET(req) {
   const { userId } = auth();
   const data = await req.json();
