@@ -93,6 +93,40 @@ export default function GameBySlug(props) {
       }
     });
   };
+  const addOwned = (callback) => {
+    fetch("/api/owned", {
+      method: "POST",
+      body: JSON.stringify({
+        game_id: game.id,
+        slug: game.slug,
+        name: game.name,
+        background_image: game.background_image,
+        released: game.released,
+        metacritic: game.metacritic,
+        reviews_count: game.reviews_count,
+        parent_platforms: game.parent_platforms,
+        rating: game.rating,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          console.log(data);
+          // Voer de callback uit als het toevoegen aan de verlanglijst is gelukt
+          callback("success", data);
+        });
+      } else {
+        response.json().then((errorData) => {
+          console.error(errorData);
+          // Voer de callback uit en geef het statusniveau door op basis van errorData
+          callback(errorData ? "warning" : "error");
+        });
+      }
+    });
+  };
+
   const handleAddToWishlist = () => {
     addWishlist((status, data) => {
       // Toon de juiste toast op basis van het statusniveau
@@ -109,6 +143,23 @@ export default function GameBySlug(props) {
       });
     });
   };
+  const handleAddToOwned = () => {
+    addOwned((status, data) => {
+      // Toon de juiste toast op basis van het statusniveau
+      toast({
+        title:
+          status === "success" && !data.error
+            ? "Added to My Games"
+            : "Already in My Games",
+        description:
+          status === "success" && !data.error
+            ? "This game has been added to My Games"
+            : "This game is already in My Games",
+        status: status,
+      });
+    });
+  };
+
   const toggleShowDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
@@ -183,6 +234,16 @@ export default function GameBySlug(props) {
                 }
               >
                 Add to Wishlist
+              </Button>
+              <Button
+                onClick={handleAddToOwned}
+                style={
+                  user && user.isSignedIn
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                Add To My Games
               </Button>
             </div>
             <div className="mt-8">

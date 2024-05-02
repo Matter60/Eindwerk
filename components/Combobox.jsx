@@ -18,26 +18,34 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const frameworks = [
+const types = [
   {
-    value: "next.js",
-    label: "Next.js",
+    value: "released",
+    label: "Released",
   },
   {
-    value: "sveltekit",
-    label: "SvelteKit",
+    value: "metacritic",
+    label: "Metacritic",
   },
   {
-    value: "nuxt.js",
-    label: "Nuxt.js",
+    value: "rating",
+    label: "Rating",
   },
   {
-    value: "remix",
-    label: "Remix",
+    value: "added",
+    label: "Added",
   },
   {
-    value: "astro",
-    label: "Astro",
+    value: "created",
+    label: "Created",
+  },
+  {
+    value: "name",
+    label: "Name",
+  },
+  {
+    value: "updated",
+    label: "Updated",
   },
 ];
 
@@ -55,17 +63,15 @@ export default function Combobox() {
           className="w-[125px] justify-between"
         >
           {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+            ? types.find((types) => types.value === value)?.label
             : "Order by"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[140px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
           <CommandGroup>
-            {frameworks.map((framework) => (
+            {types.map((framework) => (
               <CommandItem
                 key={framework.value}
                 value={framework.value}

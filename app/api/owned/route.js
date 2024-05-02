@@ -50,49 +50,26 @@ export async function POST(req) {
 }
 export async function GET(req) {
   const { userId } = auth();
-  const data = await req.json();
 
   if (!userId) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  if (!data) return NextResponse.error(400, "No data provided");
-
-  const owned = await prisma.owned.findFirst({
+  const ownedItems = await prisma.owned.findMany({
     where: {
       user_id: userId,
-      game_id: data.game_id,
-      slug: data.slug,
     },
   });
 
-  if (owned) {
-    return NextResponse.json({ error: "Already owned" });
-  }
-
-  prisma.owned
-    .create({
-      data: {
-        user_id: userId,
-        game_id: data.game_id,
-        slug: data.slug,
-        name: data.name,
-        background_image: data.background_image,
-        released: data.released,
-        metacritic: data.metacritic,
-        reviews_count: data.reviews_count,
-        parent_platforms: data.parent_platforms,
-        rating: data.rating,
+  if (ownedItems.length > 0) {
+    return new Response(JSON.stringify(ownedItems), {
+      headers: {
+        "Content-Type": "application/json",
       },
-    })
-    .then((result) => {
-      console.log("Owned item created:", result);
-    })
-    .catch((error) => {
-      console.error("Error creating owned item:", error);
     });
-
-  return NextResponse.json(data);
+  } else {
+    return new Response("No game items found", { status: 404 });
+  }
 }
 
 export async function DELETE(req) {

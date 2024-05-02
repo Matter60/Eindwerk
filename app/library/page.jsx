@@ -4,7 +4,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GameCard from "@/components/GameCard";
 
 export default function Page() {
-  const [games, setGames] = useState([]);
+  const [Wishlist, setWishlist] = useState([]);
+  const [Games, setGames] = useState([]);
   const getWishlist = (callback) => {
     fetch("/api/wishlist", {
       method: "GET",
@@ -15,7 +16,7 @@ export default function Page() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setGames(data);
+        setWishlist(data);
       })
       .catch((error) => {
         console.error("Error fetching wishlist:", error);
@@ -36,16 +37,56 @@ export default function Page() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        // Na succesvol verwijderen, roep getWishlist op om de lijst opnieuw te laden
         getWishlist();
       })
       .catch((error) => {
         console.error("Error deleting wishlist item:", error);
       });
   };
-  console.log(games);
+
+  const getGames = (callback) => {
+    fetch("/api/owned", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setGames(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching games:", error);
+      });
+  };
+  console.log(Games);
+
+  const deleteGames = (id, slug) => {
+    fetch("/api/owned", {
+      method: "DELETE",
+      body: JSON.stringify({
+        game_id: id,
+        slug: slug,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        getGames();
+      })
+      .catch((error) => {
+        console.error("Error deleting game item:", error);
+      });
+  };
 
   useEffect(() => {
     getWishlist();
+    getGames();
   }, []);
 
   return (
@@ -57,11 +98,20 @@ export default function Page() {
           <TabsTrigger value="wishlist">Wishlist</TabsTrigger>
         </TabsList>
         <TabsContent value="your-games">
-          Make changes to your account here
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
+            {Games.map((game, index) => (
+              <GameCard
+                key={index}
+                game={game}
+                onDelete={deleteGames} // Pass the deleteWishlist function
+                isLibrary={true} // Set isLibrary prop to true
+              />
+            ))}
+          </div>
         </TabsContent>
         <TabsContent value="wishlist">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
-            {games.map((game, index) => (
+            {Wishlist.map((game, index) => (
               <GameCard
                 key={index}
                 game={game}
