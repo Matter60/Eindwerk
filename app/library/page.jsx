@@ -38,7 +38,7 @@ export default function Page() {
       .then((data) => {
         console.log(data);
         // Na succesvol verwijderen, roep getWishlist op om de lijst opnieuw te laden
-        getWishlist();
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error deleting wishlist item:", error);
@@ -77,7 +77,7 @@ export default function Page() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        getGames();
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error deleting game item:", error);
@@ -98,28 +98,40 @@ export default function Page() {
           <TabsTrigger value="wishlist">Wishlist</TabsTrigger>
         </TabsList>
         <TabsContent value="your-games">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
-            {Games.map((game, index) => (
-              <GameCard
-                key={index}
-                game={game}
-                onDelete={deleteGames} // Pass the deleteWishlist function
-                isLibrary={true} // Set isLibrary prop to true
-              />
-            ))}
-          </div>
+          {Games.length === 0 ? (
+            <p className="text-gray-500 mt-40 text-center">
+              No games found in your library
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-12">
+              {Games.map((game, index) => (
+                <GameCard
+                  key={index}
+                  game={game}
+                  onDelete={deleteGames} // Pass the deleteWishlist function
+                  isLibrary={true} // Set isLibrary prop to true
+                />
+              ))}
+            </div>
+          )}
         </TabsContent>
         <TabsContent value="wishlist">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
-            {Wishlist.map((game, index) => (
-              <GameCard
-                key={index}
-                game={game}
-                onDelete={deleteWishlist} // Pass the deleteWishlist function
-                isLibrary={true} // Set isLibrary prop to true
-              />
-            ))}
-          </div>
+          {Wishlist.length === 0 ? (
+            <p className="text-gray-500 mt-40 text-center">
+              Your wishlist is empty
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-12">
+              {Wishlist.map((game, index) => (
+                <GameCard
+                  key={index}
+                  game={game}
+                  onDelete={deleteWishlist} // Pass the deleteWishlist function
+                  isLibrary={true} // Set isLibrary prop to true
+                />
+              ))}
+            </div>
+          )}
         </TabsContent>
       </Tabs>
     </div>

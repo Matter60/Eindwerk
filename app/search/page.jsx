@@ -10,16 +10,14 @@ export default function Home() {
   const [loading, setLoading] = useState(false); // Add loading state
   const searchParams = useSearchParams();
   const search = searchParams.get("q");
+  const sort = searchParams.get("sort");
 
   async function searchGames() {
     setLoading(true); // Set loading to true while fetching
     try {
       const response = await fetch(
-        `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&search=${search}
-        )}`
+        `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&search=${search}&ordering=-${sort}`
       );
-
-      console.log(response);
 
       if (response.ok) {
         const data = await response.json();

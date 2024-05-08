@@ -88,11 +88,9 @@ const GameCard = ({ game, onDelete, isLibrary }) => {
                   ) : null
                 )}
               </div>
-              {game.rating && (
-                <div className="mt-3">
-                  <StarRating rating={game.rating} />
-                </div>
-              )}
+              <div className="mt-3">
+                <StarRating rating={game.rating} />
+              </div>
             </CardDescription>
           </div>
           {isLibrary && (

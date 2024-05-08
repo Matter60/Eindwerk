@@ -9,13 +9,20 @@ const StarRating = ({ rating }) => {
   const renderStars = () => {
     let stars = [];
 
-    for (let i = 0; i < maxStars; i++) {
-      if (i < fullStars) {
-        stars.push(<FaStar key={i} />);
-      } else if (hasHalfStar && i === fullStars) {
-        stars.push(<FaStarHalfAlt key="half" />);
-      } else {
+    if (rating <= 0) {
+      console.log(rating);
+      for (let i = 0; i < maxStars; i++) {
         stars.push(<FaRegStar key={i} />);
+      }
+    } else {
+      for (let i = 0; i < maxStars; i++) {
+        if (i < fullStars) {
+          stars.push(<FaStar key={i} />);
+        } else if (hasHalfStar && i === fullStars) {
+          stars.push(<FaStarHalfAlt key="half" />);
+        } else {
+          stars.push(<FaRegStar key={i} />);
+        }
       }
     }
 
