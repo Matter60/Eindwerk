@@ -16,7 +16,9 @@ export default function Home() {
     setLoading(true); // Set loading to true while fetching
     try {
       const response = await fetch(
-        `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&search=${search}&ordering=-${sort}`
+        `https://api.rawg.io/api/games?key=${
+          process.env.NEXT_PUBLIC_RAWG_API_KEY
+        }&search=${search}&ordering=-${sort || ""}`
       );
 
       if (response.ok) {
