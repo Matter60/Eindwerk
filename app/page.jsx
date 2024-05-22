@@ -1,6 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import GameCard from "@/components/GameCard";
+import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import SkeletonLoader from "@/components/SkeletonLoader";
 
 const Page = () => {
   const [trendingGames, setTrendingGames] = useState([]);
@@ -30,14 +39,17 @@ const Page = () => {
 
     fetchTrendingGames();
   }, []);
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
       <h1 className="text-xl my-5 font-bold">Trending Games</h1>
-      <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-12">
-        {trendingGames.map((game) => (
-          <GameCard key={game.id} game={game} />
-        ))}
+      <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-6">
+        {loading
+          ? Array.from({ length: 21 }).map((_, index) => (
+              <SkeletonLoader key={index} />
+            ))
+          : trendingGames.map((game) => <GameCard key={game.id} game={game} />)}
       </div>
     </div>
   );

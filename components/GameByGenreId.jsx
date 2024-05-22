@@ -23,7 +23,7 @@ export default function GameByGenreId(props) {
     fetch(
       `https://api.rawg.io/api/games?key=${
         process.env.NEXT_PUBLIC_RAWG_API_KEY
-      }&genres=${props.genre_id}&page_size=32&page=${parseInt(
+      }&genres=${props.genre_id}&page_size=30&page=${parseInt(
         searchParams.get("page") || 1
       )}`
     ).then((response) => {
@@ -62,7 +62,7 @@ export default function GameByGenreId(props) {
 
       {loading ? (
         <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-6">
-          {Array.from({ length: 8 }).map((_, index) => (
+          {Array.from({ length: 21 }).map((_, index) => (
             <SkeletonLoader key={index} />
           ))}
         </div>
