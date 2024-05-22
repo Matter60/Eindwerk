@@ -4,6 +4,22 @@ import { useSearchParams } from "next/navigation";
 import { Badge } from "./ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@clerk/clerk-react";
+import Link from "next/link";
+
+import {
+  FaSteam,
+  FaXbox,
+  FaPlaystation,
+  FaAppStore,
+  FaGog,
+  FaNintendoSwitch,
+  FaXbox360,
+  FaGooglePlay,
+  FaItchIo,
+  FaEpicGames,
+} from "react-icons/fa";
+import { BsNintendoSwitch } from "react-icons/bs";
+import { SiEpicgames } from "react-icons/si";
 
 import {
   Carousel,
@@ -65,17 +81,27 @@ export default function GameBySlug(props) {
   function getStoreNameById(storeId) {
     switch (storeId) {
       case 1:
-        return "Steam";
+        return <FaSteam />;
       case 2:
-        return "Microsoft Store";
+        return <FaXbox />;
       case 3:
-        return "PlayStation Store";
+        return <FaPlaystation />;
+      case 4:
+        return <FaAppStore />;
+      case 5:
+        return "GOG";
+      case 6:
+        return <BsNintendoSwitch />;
       case 7:
-        return "Xbox Marketplace";
+        return <FaXbox />;
+      case 8:
+        return <FaGooglePlay />;
+      case 9:
+        return <FaItchIo />;
       case 11:
-        return "Epic Games Store";
+        return <SiEpicgames />;
       default:
-        return "Unknown Store";
+        return "Unknown";
     }
   }
 
@@ -288,16 +314,14 @@ export default function GameBySlug(props) {
               <h2 className="text-2xl font-semibold mt-4">Stores</h2>
               <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 ">
                 {Stores.map((store) => (
-                  <div key={store.id}>
-                    <a
-                      href={store.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-lg"
-                    >
-                      {getStoreNameById(store.store_id)}
-                    </a>
-                  </div>
+                  <Link
+                    href={store.url}
+                    key={store.id}
+                    target="_blank"
+                    className="text-lg"
+                  >
+                    {getStoreNameById(store.store_id)}
+                  </Link>
                 ))}
               </div>
             </div>

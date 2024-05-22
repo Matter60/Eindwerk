@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import GameCard from "@/components/GameCard";
+import SkeletonLoader from "@/components/SkeletonLoader"; // Import SkeletonLoader
 
 export default function Home() {
   const [games, setGames] = useState([]);
@@ -40,7 +41,11 @@ export default function Home() {
   return (
     <div className="p-5">
       {loading ? (
-        <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
+        <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-5 mt-5">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <SkeletonLoader key={index} />
+          ))}
+        </div>
       ) : (
         <>
           {search && (
@@ -48,7 +53,7 @@ export default function Home() {
               <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
                 Search results for &quot;{search}&quot;
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
+              <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-5 mt-5">
                 {games.map((game) => (
                   <GameCard key={game.id} game={game} />
                 ))}
