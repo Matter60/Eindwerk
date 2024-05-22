@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GameCard from "@/components/GameCard";
+import { Input } from "@/components/ui/input";
 
 export default function Page() {
   const [Wishlist, setWishlist] = useState([]);
@@ -92,14 +93,16 @@ export default function Page() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4 mt-4">Welcome to your library</h1>
+
       <Tabs defaultValue="your-games">
         <TabsList>
           <TabsTrigger value="your-games">Games</TabsTrigger>
           <TabsTrigger value="wishlist">Wishlist</TabsTrigger>
         </TabsList>
+
         <TabsContent value="your-games">
           {Games.length === 0 ? (
-            <p className="text-gray-500 mt-40 text-center">
+            <p className="text-gray-500 mt-10 text-center">
               No games found in your library
             </p>
           ) : (
@@ -117,7 +120,7 @@ export default function Page() {
         </TabsContent>
         <TabsContent value="wishlist">
           {Wishlist.length === 0 ? (
-            <p className="text-gray-500 mt-40 text-center">
+            <p className="text-gray-500 mt-10 text-center">
               Your wishlist is empty
             </p>
           ) : (

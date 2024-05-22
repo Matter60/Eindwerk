@@ -23,10 +23,9 @@ import StarRating from "@/components/StarRating"; // Adjust the path accordingly
 import Image from "next/image";
 
 const GameCard = ({ game, onDelete, isLibrary }) => {
-  // Use isLibrary prop to conditionally render the delete button
   return (
-    <Link href={`/game/${game.slug}`} key={game.id} className="h-full ">
-      <Card className="border border-muted h-full hover:bg-primary-foreground hover:scale-105 transition duration-100 hover:shadow-lg">
+    <Link href={`/game/${game.slug}`} key={game.id} className="h-full">
+      <Card className="relative border border-muted h-full hover:bg-primary-foreground hover:scale-105 transition duration-100 hover:shadow-lg">
         <div className="relative h-[187px] w-full">
           <Image
             src={game.background_image}
@@ -58,7 +57,9 @@ const GameCard = ({ game, onDelete, isLibrary }) => {
             </div>
           )}
         </div>
-        <CardContent className="p-3">
+        <CardContent className="p-3 pb-12">
+          {" "}
+          {/* Adjust padding-bottom to make space for the button */}
           <div className="my-3">
             <CardTitle>{game.name}</CardTitle>
             <CardDescription>
@@ -93,18 +94,18 @@ const GameCard = ({ game, onDelete, isLibrary }) => {
               </div>
             </CardDescription>
           </div>
-          {isLibrary && (
-            <Button
-              className="px-2 py-1 bg-red-500 text-white hover:bg-red-700"
-              onClick={(event) => {
-                event.preventDefault(); // Prevent default link behavior
-                onDelete(game.id, game.slug);
-              }}
-            >
-              <FaTrashAlt />
-            </Button>
-          )}
         </CardContent>
+        {isLibrary && (
+          <Button
+            className="absolute bottom-3 left-1/2 transform -translate-x-1/2 px-6 py-2 bg-red-500 text-white hover:bg-red-700 transition-all duration-200"
+            onClick={(event) => {
+              event.preventDefault(); // Prevent default link behavior
+              onDelete(game.id, game.slug);
+            }}
+          >
+            <FaTrashAlt />
+          </Button>
+        )}
       </Card>
     </Link>
   );
