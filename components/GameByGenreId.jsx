@@ -1,9 +1,9 @@
-"use client";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import GameCard from "./GameCard";
+import SkeletonLoader from "./SkeletonLoader"; // Voeg de SkeletonLoader component toe
 
 export default function GameByGenreId(props) {
   const [games, setGames] = useState([]);
@@ -16,6 +16,10 @@ export default function GameByGenreId(props) {
       setPage(parseInt(searchParams.get("page")));
     }
 
+    fetchGames();
+  }, []);
+
+  const fetchGames = () => {
     fetch(
       `https://api.rawg.io/api/games?key=${
         process.env.NEXT_PUBLIC_RAWG_API_KEY
@@ -24,12 +28,11 @@ export default function GameByGenreId(props) {
       )}`
     ).then((response) => {
       response.json().then((data) => {
-        console.log(data.results);
         setGames(data.results);
         setLoading(false);
       });
     });
-  }, []);
+  };
 
   const genreLabels = {
     4: "Action",
@@ -58,10 +61,14 @@ export default function GameByGenreId(props) {
       <h2 className="text-xl my-5 font-bold">{genreLabels} Games</h2>
 
       {loading ? (
-        <div className="border-gray-400 h-20 w-20 animate-spin rounded-full border-8 border-t-gray-700 flex justify-center items-center absolute left-1/2 top-1/2" />
+        <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-6">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <SkeletonLoader key={index} />
+          ))}
+        </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-12">
+          <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-6">
             {games.map((game) => (
               <GameCard game={game} key={game.id} />
             ))}
