@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export async function getGenres() {
   const response = await fetch(
@@ -10,7 +11,7 @@ export async function getGenres() {
     return data.results;
   }
 
-  return [];
+  return getGenres();
 }
 
 export async function GenreList() {
@@ -24,11 +25,13 @@ export async function GenreList() {
           key={genre.id}
           className="flex gap-2 items-center mb-2 cursor-pointer hover:bg-primary-foreground p-2 rounded-lg"
         >
-          <img
+          <Image
             key={genre.id}
             className="w-[40px] h-[40px] object-cover rounded-lg group-hover:scale-105 transition-all ease-out duration-300"
             src={genre.image_background}
             alt={genre.name}
+            width={40}
+            height={40}
           />
           <h3 className="group-hover:font-bold group-hover:scale-105 transition-all ease-out duration-300">
             {genre.name}

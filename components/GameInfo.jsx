@@ -27,6 +27,7 @@ export default function GameBySlug(props) {
   const [loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const searchParams = useSearchParams();
+  const [Stores, setStores] = useState([]);
 
   useEffect(() => {
     const { slug } = props;
@@ -55,10 +56,28 @@ export default function GameBySlug(props) {
       `https://api.rawg.io/api/games/${slug}/stores?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
     ).then((response) => {
       response.json().then((data) => {
+        setStores(data.results);
         console.log(data.results);
       });
     });
   }, [props.slug]);
+
+  function getStoreNameById(storeId) {
+    switch (storeId) {
+      case 1:
+        return "Steam";
+      case 2:
+        return "Microsoft Store";
+      case 3:
+        return "PlayStation Store";
+      case 7:
+        return "Xbox Marketplace";
+      case 11:
+        return "Epic Games Store";
+      default:
+        return "Unknown Store";
+    }
+  }
 
   const addWishlist = (callback) => {
     fetch("/api/wishlist", {
@@ -265,6 +284,21 @@ export default function GameBySlug(props) {
                   <h3 className="text-lg font-medium">Creators</h3>
                   <p className="text-lg">{game.creators_count}</p>
                 </div>
+              </div>
+              <h2 className="text-2xl font-semibold mt-4">Stores</h2>
+              <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 ">
+                {Stores.map((store) => (
+                  <div key={store.id}>
+                    <a
+                      href={store.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-lg"
+                    >
+                      {getStoreNameById(store.store_id)}
+                    </a>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
