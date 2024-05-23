@@ -266,7 +266,6 @@ export default function GameBySlug(props) {
                         </CarouselItem>
                       ))}
                   </CarouselContent>
-                  <CarouselPrevious />
                   <CarouselNext />
                 </Carousel>
               </div>
