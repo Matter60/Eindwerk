@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from "react";
 import GameCard from "@/components/GameCard";
 import Image from "next/image";
+import SkeletonLoaderImg from "@/components/SkeletonLoaderImg";
 import SkeletonLoader from "@/components/SkeletonLoader";
+import Link from "next/link";
 
 const Page = () => {
   const [trendingGames, setTrendingGames] = useState([]);
@@ -64,20 +66,25 @@ const Page = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-6">
         {loading
           ? Array.from({ length: 5 }).map((_, index) => (
-              <SkeletonLoader key={index} />
+              <SkeletonLoaderImg key={index} />
             ))
           : upcomingGames.map((game) => (
-              <div key={game.id} className="relative">
-                <Image
-                  src={game.background_image}
-                  alt={game.name}
-                  width={1280}
-                  height={720}
-                  className="rounded-lg"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 rounded-b-lg">
-                  <h2 className="text-xs font-bold">{game.name}</h2>
-                </div>
+              <div
+                key={game.id}
+                className="relative hover:bg-primary-foreground hover:scale-105 transition duration-100 hover:shadow-lg"
+              >
+                <Link href={`/game/${game.slug}`} key={game.id}>
+                  <Image
+                    src={game.background_image}
+                    alt={game.name}
+                    width={1280}
+                    height={720}
+                    className="rounded-lg"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 rounded-b-lg">
+                    <h2 className="text-xs font-bold">{game.name}</h2>
+                  </div>
+                </Link>
               </div>
             ))}
       </div>
