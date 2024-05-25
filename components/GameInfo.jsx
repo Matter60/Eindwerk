@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
 import { Badge } from "./ui/badge";
@@ -11,6 +11,8 @@ import {
   FaXbox,
   FaPlaystation,
   FaAppStore,
+  FaGog,
+  FaNintendoSwitch,
   FaGooglePlay,
   FaItchIo,
 } from "react-icons/fa";
@@ -22,35 +24,11 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
 
-const getStoreNameById = (storeId) => {
-  switch (storeId) {
-    case 1:
-      return <FaSteam />;
-    case 2:
-      return <FaXbox />;
-    case 3:
-      return <FaPlaystation />;
-    case 4:
-      return <FaAppStore />;
-    case 5:
-      return "GOG";
-    case 6:
-      return <BsNintendoSwitch />;
-    case 8:
-      return <FaGooglePlay />;
-    case 9:
-      return <FaItchIo />;
-    case 11:
-      return <SiEpicgames />;
-    default:
-      return "Unknown";
-  }
-};
-
-export default function GameBySlug({ slug }) {
+export default function GameBySlug(props) {
   const { toast } = useToast();
   const user = useUser();
 
@@ -61,31 +39,27 @@ export default function GameBySlug({ slug }) {
   const [stores, setStores] = useState([]);
 
   useEffect(() => {
+    const { slug } = props;
+
     const fetchGameData = async () => {
       try {
-        const gameResponse = fetch(
+        const gameResponse = await fetch(
           `https://api.rawg.io/api/games/${slug}?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
         );
-        const screenshotsResponse = fetch(
+        const screenshotsResponse = await fetch(
           `https://api.rawg.io/api/games/${slug}/screenshots?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
         );
-        const storesResponse = fetch(
+        const storesResponse = await fetch(
           `https://api.rawg.io/api/games/${slug}/stores?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`
         );
 
-        const [gameData, screenshotsData, storesData] = await Promise.all([
-          gameResponse,
-          screenshotsResponse,
-          storesResponse,
-        ]);
+        const gameData = await gameResponse.json();
+        const screenshotsData = await screenshotsResponse.json();
+        const storesData = await storesResponse.json();
 
-        const gameJson = await gameData.json();
-        const screenshotsJson = await screenshotsData.json();
-        const storesJson = await storesData.json();
-
-        setGame(gameJson);
-        setScreenshots(screenshotsJson.results);
-        setStores(storesJson.results);
+        setGame(gameData);
+        setScreenshots(screenshotsData.results);
+        setStores(storesData.results);
       } catch (error) {
         console.error("Failed to fetch game data:", error);
       } finally {
@@ -94,19 +68,34 @@ export default function GameBySlug({ slug }) {
     };
 
     fetchGameData();
-  }, [slug]);
+  }, [props.slug]);
 
-  const memoizedGetStoreNameById = useMemo(() => getStoreNameById, []);
-
-  const handleAddToWishlist = async () => {
-    await addGameToCollection("/api/wishlist", "Wishlist");
+  const getStoreNameById = (storeId) => {
+    switch (storeId) {
+      case 1:
+        return <FaSteam />;
+      case 2:
+        return <FaXbox />;
+      case 3:
+        return <FaPlaystation />;
+      case 4:
+        return <FaAppStore />;
+      case 5:
+        return "GOG";
+      case 6:
+        return <BsNintendoSwitch />;
+      case 8:
+        return <FaGooglePlay />;
+      case 9:
+        return <FaItchIo />;
+      case 11:
+        return <SiEpicgames />;
+      default:
+        return "Unknown";
+    }
   };
 
-  const handleAddToOwned = async () => {
-    await addGameToCollection("/api/owned", "My Games");
-  };
-
-  const addGameToCollection = async (apiEndpoint, collectionName) => {
+  const addGameToCollection = async (apiEndpoint, collectionName, callback) => {
     try {
       const response = await fetch(apiEndpoint, {
         method: "POST",
@@ -128,7 +117,7 @@ export default function GameBySlug({ slug }) {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && !data.error) {
         toast({
           title: `Added to ${collectionName}`,
           description: `This game has been added to your ${collectionName.toLowerCase()}`,
@@ -149,6 +138,14 @@ export default function GameBySlug({ slug }) {
         status: "error",
       });
     }
+  };
+
+  const handleAddToWishlist = () => {
+    addGameToCollection("/api/wishlist", "Wishlist");
+  };
+
+  const handleAddToOwned = () => {
+    addGameToCollection("/api/owned", "My Games");
   };
 
   const toggleShowDescription = () => {
@@ -253,7 +250,7 @@ export default function GameBySlug({ slug }) {
                 target="_blank"
                 className="text-lg"
               >
-                {memoizedGetStoreNameById(store.store_id)}
+                {getStoreNameById(store.store_id)}
               </Link>
             ))}
           </div>
