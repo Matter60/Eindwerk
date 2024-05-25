@@ -11,8 +11,6 @@ import {
   FaXbox,
   FaPlaystation,
   FaAppStore,
-  FaGog,
-  FaNintendoSwitch,
   FaGooglePlay,
   FaItchIo,
 } from "react-icons/fa";
@@ -24,9 +22,33 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
+
+const getStoreNameById = (storeId) => {
+  switch (storeId) {
+    case 1:
+      return <FaSteam />;
+    case 2:
+      return <FaXbox />;
+    case 3:
+      return <FaPlaystation />;
+    case 4:
+      return <FaAppStore />;
+    case 5:
+      return "GOG";
+    case 6:
+      return <BsNintendoSwitch />;
+    case 8:
+      return <FaGooglePlay />;
+    case 9:
+      return <FaItchIo />;
+    case 11:
+      return <SiEpicgames />;
+    default:
+      return "Unknown";
+  }
+};
 
 export default function GameBySlug({ slug }) {
   const { toast } = useToast();
@@ -74,33 +96,7 @@ export default function GameBySlug({ slug }) {
     fetchGameData();
   }, [slug]);
 
-  const getStoreNameById = useMemo(
-    () => (storeId) => {
-      switch (storeId) {
-        case 1:
-          return <FaSteam />;
-        case 2:
-          return <FaXbox />;
-        case 3:
-          return <FaPlaystation />;
-        case 4:
-          return <FaAppStore />;
-        case 5:
-          return "GOG";
-        case 6:
-          return <BsNintendoSwitch />;
-        case 8:
-          return <FaGooglePlay />;
-        case 9:
-          return <FaItchIo />;
-        case 11:
-          return <SiEpicgames />;
-        default:
-          return "Unknown";
-      }
-    },
-    []
-  );
+  const memoizedGetStoreNameById = useMemo(() => getStoreNameById, []);
 
   const handleAddToWishlist = async () => {
     await addGameToCollection("/api/wishlist", "Wishlist");
@@ -249,7 +245,7 @@ export default function GameBySlug({ slug }) {
             </div>
           </div>
           <h2 className="text-2xl font-semibold mt-4">Stores</h2>
-          <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 ">
+          <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
             {stores.map((store) => (
               <Link
                 href={store.url}
@@ -257,7 +253,7 @@ export default function GameBySlug({ slug }) {
                 target="_blank"
                 className="text-lg"
               >
-                {getStoreNameById(store.store_id)}
+                {memoizedGetStoreNameById(store.store_id)}
               </Link>
             ))}
           </div>
