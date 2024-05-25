@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import GameCard from "@/components/GameCard";
 import Image from "next/image";
 import SkeletonLoaderImg from "@/components/SkeletonLoaderImg";
@@ -13,50 +13,50 @@ const Page = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTrendingGames = async () => {
+    const fetchGames = async () => {
       try {
-        const response = await fetch(
-          `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&ordering=-added&page_size=21`
-        );
+        const [trendingResponse, upcomingResponse] = await Promise.all([
+          fetch(
+            `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&ordering=-added&page_size=21`
+          ),
+          fetch(
+            `https://api.rawg.io/api/games/lists/main?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&ordering=-released&page_size=5`
+          ),
+        ]);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch trending games");
+        if (!trendingResponse.ok || !upcomingResponse.ok) {
+          throw new Error("Failed to fetch games data");
         }
 
-        const data = await response.json();
-        setTrendingGames(data.results);
+        const [trendingData, upcomingData] = await Promise.all([
+          trendingResponse.json(),
+          upcomingResponse.json(),
+        ]);
+
+        setTrendingGames(trendingData.results);
+        setUpcomingGames(upcomingData.results);
       } catch (error) {
-        console.error("An error occurred while fetching trending games", error);
+        console.error("An error occurred while fetching games data", error);
         setError(error.message);
       } finally {
         setLoading(false);
       }
     };
 
-    const fetchUpcomingGames = async () => {
-      try {
-        const response = await fetch(
-          `https://api.rawg.io/api/games/lists/main?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&ordering=-released&page_size=5`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch upcoming games");
-        }
-
-        const data = await response.json();
-        setUpcomingGames(data.results);
-        console.log(data.results);
-      } catch (error) {
-        console.error("An error occurred while fetching upcoming games", error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTrendingGames();
-    fetchUpcomingGames();
+    fetchGames();
   }, []);
+
+  const loadingSkeletons = useMemo(
+    () => ({
+      upcoming: Array.from({ length: 5 }).map((_, index) => (
+        <SkeletonLoaderImg key={index} />
+      )),
+      trending: Array.from({ length: 21 }).map((_, index) => (
+        <SkeletonLoader key={index} />
+      )),
+    }),
+    []
+  );
 
   if (error) return <div>Error: {error}</div>;
 
@@ -65,15 +65,13 @@ const Page = () => {
       <h1 className="text-xl my-5 font-bold">Upcoming Games</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-6">
         {loading
-          ? Array.from({ length: 5 }).map((_, index) => (
-              <SkeletonLoaderImg key={index} />
-            ))
+          ? loadingSkeletons.upcoming
           : upcomingGames.map((game) => (
               <div
                 key={game.id}
                 className="relative hover:bg-primary-foreground hover:scale-105 transition duration-100 hover:shadow-lg"
               >
-                <Link href={`/game/${game.slug}`} key={game.id}>
+                <Link href={`/game/${game.slug}`}>
                   <Image
                     src={game.background_image}
                     alt={game.name}
@@ -92,9 +90,7 @@ const Page = () => {
       <h1 className="text-xl my-5 font-bold">Trending Games</h1>
       <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-6">
         {loading
-          ? Array.from({ length: 21 }).map((_, index) => (
-              <SkeletonLoader key={index} />
-            ))
+          ? loadingSkeletons.trending
           : trendingGames.map((game) => <GameCard key={game.id} game={game} />)}
       </div>
     </div>

@@ -5,9 +5,13 @@ import GameCard from "@/components/GameCard";
 import { Input } from "@/components/ui/input";
 
 export default function Page() {
-  const [Wishlist, setWishlist] = useState([]);
-  const [Games, setGames] = useState([]);
-  const getWishlist = (callback) => {
+  const [wishlist, setWishlist] = useState([]);
+  const [games, setGames] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredGames, setFilteredGames] = useState([]);
+  const [filteredWishlist, setFilteredWishlist] = useState([]);
+
+  const getWishlist = () => {
     fetch("/api/wishlist", {
       method: "GET",
       headers: {
@@ -16,8 +20,8 @@ export default function Page() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setWishlist(data);
+        setFilteredWishlist(data);
       })
       .catch((error) => {
         console.error("Error fetching wishlist:", error);
@@ -37,8 +41,6 @@ export default function Page() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        // Na succesvol verwijderen, roep getWishlist op om de lijst opnieuw te laden
         window.location.reload();
       })
       .catch((error) => {
@@ -46,7 +48,7 @@ export default function Page() {
       });
   };
 
-  const getGames = (callback) => {
+  const getGames = () => {
     fetch("/api/owned", {
       method: "GET",
       headers: {
@@ -55,14 +57,13 @@ export default function Page() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setGames(data);
+        setFilteredGames(data);
       })
       .catch((error) => {
         console.error("Error fetching games:", error);
       });
   };
-  console.log(Games);
 
   const deleteGames = (id, slug) => {
     fetch("/api/owned", {
@@ -77,7 +78,6 @@ export default function Page() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         window.location.reload();
       })
       .catch((error) => {
@@ -90,10 +90,29 @@ export default function Page() {
     getGames();
   }, []);
 
+  useEffect(() => {
+    setFilteredGames(
+      games.filter((game) =>
+        game.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+    setFilteredWishlist(
+      wishlist.filter((game) =>
+        game.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, games, wishlist]);
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4 mt-4">Welcome to your library</h1>
-
+      <Input
+        type="text"
+        placeholder="Search for games..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-4"
+      />
       <Tabs defaultValue="your-games">
         <TabsList>
           <TabsTrigger value="your-games">Games</TabsTrigger>
@@ -101,36 +120,36 @@ export default function Page() {
         </TabsList>
 
         <TabsContent value="your-games">
-          {Games.length === 0 ? (
+          {filteredGames.length === 0 ? (
             <p className="text-gray-500 mt-10 text-center">
               No games found in your library
             </p>
           ) : (
             <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-12">
-              {Games.map((game, index) => (
+              {filteredGames.map((game, index) => (
                 <GameCard
                   key={index}
                   game={game}
-                  onDelete={deleteGames} // Pass the deleteWishlist function
-                  isLibrary={true} // Set isLibrary prop to true
+                  onDelete={deleteGames}
+                  isLibrary={true}
                 />
               ))}
             </div>
           )}
         </TabsContent>
         <TabsContent value="wishlist">
-          {Wishlist.length === 0 ? (
+          {filteredWishlist.length === 0 ? (
             <p className="text-gray-500 mt-10 text-center">
               Your wishlist is empty
             </p>
           ) : (
             <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-4 mt-12">
-              {Wishlist.map((game, index) => (
+              {filteredWishlist.map((game, index) => (
                 <GameCard
                   key={index}
                   game={game}
-                  onDelete={deleteWishlist} // Pass the deleteWishlist function
-                  isLibrary={true} // Set isLibrary prop to true
+                  onDelete={deleteWishlist}
+                  isLibrary={true}
                 />
               ))}
             </div>
