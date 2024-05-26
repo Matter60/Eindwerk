@@ -42,7 +42,7 @@ export default function Home() {
     <div className="p-5">
       {loading ? (
         <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 gap-5 mt-5">
-          {Array.from({ length: 10 }).map((_, index) => (
+          {Array.from({ length: 30 }).map((_, index) => (
             <SkeletonLoader key={index} />
           ))}
         </div>

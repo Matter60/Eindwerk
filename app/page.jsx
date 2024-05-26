@@ -75,8 +75,8 @@ const Page = () => {
                   <Image
                     src={game.background_image}
                     alt={game.name}
-                    width={1280}
-                    height={720}
+                    width={2560}
+                    height={1440}
                     className="rounded-lg"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 rounded-b-lg">
