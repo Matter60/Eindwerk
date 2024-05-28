@@ -26,12 +26,14 @@ import {
   SignedIn,
   UserProfile,
 } from "@clerk/nextjs";
+import { useClerk } from "@clerk/clerk-react";
 
 import Link from "next/link";
 import { ThemeProvider } from "./theme-provider";
+
 function NavBar() {
   const { user } = useUser();
-  const handleSignOut = async () => {};
+  const { openUserProfile } = useClerk();
 
   return (
     <div className="sticky top-0 z-50 w-full border-b bg-background/95 p-2 backdrop-blur dark:border-zinc-800">
@@ -66,9 +68,9 @@ function NavBar() {
             <DropdownMenuContent className="w-2)">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => openUserProfile()}>
                 <User className="mr-2 h-4 w-4" />
-                <SignedIn>{user.fullName}</SignedIn>
+                {user.fullName}
               </DropdownMenuItem>
 
               <DropdownMenuItem asChild>
@@ -80,7 +82,7 @@ function NavBar() {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <LogOut className="mr-2 h-4 w-4" />
-                <SignOutButton onClick={handleSignOut}>Log out</SignOutButton>
+                <SignOutButton>Log out</SignOutButton>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
